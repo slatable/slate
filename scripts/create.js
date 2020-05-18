@@ -28,6 +28,7 @@ function createProjectDir(name) {
 function createTypeScriptConfigFile(dir) {
   const template = {
     "extends": "../../tsconfig.json",
+    "extendsExact": true,
     "compilerOptions": {
       "declaration": true,
       "outDir": "dist",
