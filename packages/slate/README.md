@@ -1,11 +1,11 @@
-# `core`
+# `slate`
 
   > TODO: description
   
   ## Usage
   
   ```
-  const container = require('@slatable/core');
+  const container = require('@slatable/slate');
   
   // TODO: DEMONSTRATE API
   ```

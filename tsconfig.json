@@ -21,9 +21,8 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "downlevelIteration": true,
-    "strictNullChecks": false
+    "strictNullChecks": false,
   },
-  "include": [
-    "src"
-  ]
+  "exclude": ["node_modules"],
+  "include": ["packages"]
 }
