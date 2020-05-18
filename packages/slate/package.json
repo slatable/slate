@@ -1,0 +1,23 @@
+{
+  "name": "@slatable/slate",
+  "version": "1.0.0",
+  "description": "slatable slate",
+  "author": "",
+  "homepage": "https://github.com/slatable/core",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "module": "dist/index.es.js",
+  "directories": {
+    "lib": "src",
+    "test": "__tests__"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "rollup -c"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
