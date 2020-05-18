@@ -1,0 +1,19 @@
+{
+  "name": "@slatable/core",
+  "version": "1.0.0",
+  "description": "slatable core",
+  "author": "",
+  "homepage": "https://github.com/slatable/core",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "directories": {
+    "lib": "src",
+    "test": "__tests__"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "rm -rf dist && tsc -d"
+  }
+}
