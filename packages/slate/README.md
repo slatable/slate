@@ -29,8 +29,8 @@ container.register(BoldFunction);
 container.register(UnderlineFunction);
 
 // do some register for toolbars...
-ToolBar.register(BoldToolbar);
-ToolBar.register(UnderlineToolbar);
+container.toolbar.register(BoldToolbar);
+container.toolbar.register(UnderlineToolbar);
 
 // then render App
 ReactDOM.redner(<APP />, document.getElementById('root'));
