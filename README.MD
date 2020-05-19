@@ -18,7 +18,13 @@
   - 2020-05-19
     - 第一次发布
   
-# 使用方法
+# 启动本项目
+
+```bash
+$ npm i -g lerna
+$ lerna bootstrap
+$ lerna run build
+```
 
 
 
