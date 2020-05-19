@@ -16,5 +16,6 @@
     "slate": "^0.58.1",
     "slate-react": "^0.58.1",
     "typescript": "^3.9.2"
-  }
+  },
+  "dependencies": {}
 }

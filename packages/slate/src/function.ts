@@ -1,11 +1,15 @@
 import React from 'react';
 import { ReactEditor } from 'slate-react';
 import { SlateContainer } from './container';
+import { TElementRenderProps } from './transforms/elementRender';
+import { TLeafRenderProps } from './transforms/leafElement';
 
 export class SlateFunction {
   public readonly container: SlateContainer;
-  constructor(container: SlateContainer) {
+  public readonly type: 'element' | 'leaf' | 'attr';
+  constructor(container: SlateContainer, type: 'element' | 'leaf' | 'attr') {
     this.container = container;
+    this.type = type;
   }
 }
 
@@ -17,7 +21,11 @@ export abstract class TSlateFunction extends SlateFunction {
   abstract readonly tagname?: string;
 
   // 渲染组件
-  abstract componentRenderNodes?<T = any>(props?: T): React.FunctionComponent;
+  abstract componentRenderNodes?(
+    style: { [key: string]: any }, 
+    props: TLeafRenderProps | TElementRenderProps,
+    data?: any,
+  ): React.ReactElement;
 
   // 属性渲染
   abstract componentRenderStyle?<T = any>(data?: T): {
@@ -31,7 +39,10 @@ export abstract class TSlateFunction extends SlateFunction {
   abstract componentTerminate?(): void;
 
   // 渲染拦截器
-  abstract componentRenderInterceptor?<R = any>(editor: ReactEditor, props: { children: React.ReactElement }): R;
+  abstract componentRenderInterceptor?<R = any>(
+    container: SlateContainer, 
+    props: TLeafRenderProps | TElementRenderProps
+  ): R;
 
   // 是否选取选中
   abstract componentRangeIsMarked?<T = any>(value: T): boolean;

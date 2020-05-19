@@ -2,17 +2,32 @@ import { EventEmitter } from '@flowx/events';
 import { TSlateFunction } from './function';
 import { ReactEditor, withReact } from 'slate-react';
 import { withHistory } from 'slate-history';
-import { createEditor } from 'slate';
+import { createEditor, Editor, Range } from 'slate';
+import { generate } from 'randomstring';
+import { TElementNode } from './transforms';
+import { SlateToolbar } from './toolbar';
 
 export class SlateContainer extends EventEmitter {
   public editor: ReactEditor;
-  private readonly functions: Map<string, TSlateFunction> = new Map();
+  public readonly functions: Map<string, TSlateFunction> = new Map();
+  public readonly toolbar = new SlateToolbar(this);
   private readonly counter: Map<string, number> = new Map();
   private readonly extras: Map<string, any> = new Map();
+  public blurSelection: Range;
 
   constructor() {
     super();
     this.extras.set('wrappers', new Map<string, (editor: ReactEditor) => ReactEditor>());
+  }
+
+  static createNewID(weight: number = 5) {
+    return generate(weight);
+  }
+
+  public setLastSelectionWhenBlur() {
+    if (this.editor || this.editor.selection) {
+      this.blurSelection = this.editor.selection;
+    }
   }
 
   /**
@@ -84,6 +99,46 @@ export class SlateContainer extends EventEmitter {
     }
     const wrappers: Map<string, (editor: ReactEditor) => ReactEditor> = this.extras.get('wrappers');
     if (wrappers.has(namespace)) wrappers.delete(namespace);
+    return this;
+  }
+
+  public useRangeLeaf<T = any>(namespace: string): [boolean, T] {
+    let marks = Editor.marks(this.editor);
+    if (!marks || !marks[namespace]) {
+      if (this.editor.selection && Range.isExpanded(this.editor.selection) && this.functions.has(namespace)) {
+        const object = this.functions.get(namespace);
+        if (object.componentRangeIsMarked) {
+          const [match] = Editor.nodes(this.editor, {
+            match: object.componentRangeIsMarked.bind(object),
+          });
+          if (match && match[0]) marks = match[0];
+        }
+      }
+    }
+    if (marks && marks[namespace]) {
+      if (Array.isArray(marks[namespace])) return [!!marks[namespace].length, marks[namespace]];
+      if (['string','number','boolean'].indexOf(typeof marks[namespace]) > -1) return [!!marks[namespace], marks[namespace]];
+      return [!!Object.keys(marks[namespace]).length, marks[namespace]];
+    }
+  }
+
+  public useRangeElement(namespace: string | string[]): [boolean, TElementNode] {
+    const [match] = Editor.nodes<TElementNode>(this.editor, {
+      match: node => {
+        if (Array.isArray(namespace)) return namespace.indexOf(node.type as string) > -1;
+        return node.type === namespace;
+      }
+    });
+    return [!!match, match[0]];
+  }
+
+  public toggleMark<T = any>(namespace: string, value: T) {
+    const [active] = this.useRangeLeaf(namespace);
+    if (active) {
+      Editor.removeMark(this.editor, namespace);
+    } else {
+      Editor.addMark(this.editor, namespace, value);
+    }
     return this;
   }
 }

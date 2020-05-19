@@ -22,6 +22,8 @@
   },
   "dependencies": {
     "@flowx/events": "^1.0.3",
+    "@types/randomstring": "^1.1.6",
+    "randomstring": "^1.1.5",
     "slate-history": "^0.58.1"
   },
   "peerDependencies": {

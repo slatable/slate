@@ -67,6 +67,6 @@ export class SlateToolbar {
     return memo((props) => {
       const items = this.buildTools(props.format, DividerComponent);
       return React.createElement(React.Fragment, null, items);
-    });
+    }, (prev, next) => prev.format !== next.format);
   }
 }
