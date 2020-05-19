@@ -25,5 +25,5 @@
     "strictNullChecks": false,
   },
   "exclude": ["node_modules"],
-  "include": ["packages"]
+  "include": ["packages", "src"]
 }
