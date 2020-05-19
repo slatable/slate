@@ -52,6 +52,10 @@ export class SlateFunction {
     return this;
   }
 
+  public insertText(data: string) {
+    Transforms.insertText(this.container.editor, data)
+  }
+
   public setAttribute(style: [string, any][]) {
     const editor = this.container.editor;
     if (!editor) return;

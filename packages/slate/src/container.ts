@@ -2,7 +2,8 @@ import { EventEmitter } from '@flowx/events';
 import { TSlateFunction } from './function';
 import { ReactEditor, withReact } from 'slate-react';
 import { withHistory } from 'slate-history';
-import { createEditor, Editor, Range } from 'slate';
+import { jsx } from 'slate-hyperscript';
+import { createEditor, Editor, Range, Transforms, Text } from 'slate';
 import { generate } from 'randomstring';
 import { TElementNode } from './transforms';
 import { SlateToolbar } from './toolbar';
@@ -37,7 +38,7 @@ export class SlateContainer extends EventEmitter {
    * 插件：通过reduce插件来扩展功能
    */
   public createEditor() {
-    const editor = this.onContext(withReact(withHistory(createEditor())));
+    const editor = this.withHtml(this.onContext(withReact(withHistory(createEditor()))));
     const wrappers: Map<string, (editor: ReactEditor) => ReactEditor> = this.extras.get('wrappers');
     return Array.from(wrappers).reduce((prev, current) => current[1](prev), editor);
   }
@@ -140,5 +141,61 @@ export class SlateContainer extends EventEmitter {
       Editor.addMark(this.editor, namespace, value);
     }
     return this;
+  }
+
+  private withHtml(editor: ReactEditor) {
+    const insertData = editor.insertData;
+    editor.insertData = (data: any) => {
+      const html = data.getData('text/html')
+      if (html) {
+        const parsed = new DOMParser().parseFromString(html, 'text/html');
+        const fragment = this.deserialize(parsed.body);
+        Transforms.insertFragment(editor, fragment);
+        return;
+      }
+      insertData(data);
+    }
+    return editor;
+  }
+
+  private deserialize(el: any): any {
+    if (el.nodeType === 3) return el.textContent;
+    else if (el.nodeType !== 1) return null;
+    else if (el.nodeName === 'BR') return '\n';
+
+    const { nodeName } = el;
+    let parent = el;
+
+    if (
+      nodeName === 'PRE' &&
+      el.childNodes[0] &&
+      el.childNodes[0].nodeName === 'CODE'
+    ) parent = el.childNodes[0];
+
+    const children = Array.from(parent.childNodes)
+        .map(this.deserialize.bind(this))
+        .flat();
+
+    if (el.nodeName === 'BODY') return jsx('fragment', {}, children);
+    const elementTagNode = this.findFunctionByTag(nodeName);
+    if (elementTagNode && elementTagNode.componentDeserialize) {
+      switch (elementTagNode.type) {
+        case 'element': return jsx('element', elementTagNode.componentDeserialize(el), children);
+        case 'leaf': return children.find((child) => Text.isText(child))?.map((child:any) => jsx('text', elementTagNode.componentDeserialize(el), child));
+      }
+    }
+    return children;
+  }
+
+  private findFunctionByTag(tag: string) {
+    for (const [key, value] of this.functions) {
+      if (value.tagname === tag) {
+        return value;
+      }
+    }
+  }
+
+  public focus(editor: ReactEditor) {
+    Transforms.select(editor, this.blurSelection);
   }
 }
