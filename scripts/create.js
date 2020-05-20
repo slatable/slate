@@ -112,7 +112,8 @@ function createIndexFile(src, project) {
     constructor(container: SlateContainer) {
       super(container, 'leaf');
       this.event$ = this.container.on('editor:' + ${name}Function.namespace).subscribe(() => {
-        this.setLeaf(BoldFunction.namespace);
+        this.container.focus();
+        this.setLeaf(${name}Function.namespace);
       });
     }
   
