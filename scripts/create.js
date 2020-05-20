@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const inquirer = require('inquirer');
+const childprocess = require('child_process');
 const prompt = inquirer.createPromptModule();
 
 prompt([{
@@ -15,8 +16,11 @@ prompt([{
   createReadme(dir, data.project);
   const src = createDir(dir, 'src');
   const test = createDir(dir, '__tests__');
-  createIndexFile(src);
+  createIndexFile(src, data.project);
   createTestFile(test, data.project);
+  childprocess.spawn('lerna', ['bootstrap'], {
+    stdio: 'inherit'
+  });
 });
 
 function createProjectDir(name) {
@@ -60,6 +64,15 @@ function createPackageFile(dir, project) {
     },
     "publishConfig": {
       "access": "public"
+    },
+    "dependencies": {
+      "@slatable/slate": "^1.0.0",
+      "slate-react": "^0.58.1"
+    },
+    "peerDependencies": {
+      "@reactivex/rxjs": "^6.5.5",
+      "rxjs": "^6.5.5",
+      "rxjs-compat": "^6.5.5"
     }
   }
   fs.writeFileSync(path.resolve(dir, 'package.json'), JSON.stringify(template, null, 2), 'utf8');
@@ -86,8 +99,55 @@ function createDir(dir, name) {
   return _dir;
 }
 
-function createIndexFile(src) {
-  fs.writeFileSync(path.resolve(src, 'index.ts'), `export const test = 1;`, 'utf8');
+function createIndexFile(src, project) {
+  const name = project[0].toUpperCase() + project.substring(1);
+  fs.writeFileSync(path.resolve(src, 'index.tsx'), `import React from 'react';
+  import { ReactEditor } from 'slate-react';
+  import { Subscription } from '@reactivex/rxjs';
+  import { SlateFunction, TSlateFunction, SlateContainer, TLeafRenderProps, TElementRenderProps } from '@slatable/slate';
+  
+  export class ${name}Function extends SlateFunction implements TSlateFunction {
+    static readonly namespace = '${name}';
+    constructor(container: SlateContainer) {
+      super(container, 'leaf');
+      this.event$ = this.container.on('editor:' + ${name}Function.namespace).subscribe(() => {
+        this.setLeaf(BoldFunction.namespace);
+      });
+    }
+  
+    public componentRenderNodes(style: { [key: string]: any }, props: TLeafRenderProps | TElementRenderProps) {
+      return <div></div>
+    }
+  
+    public componentRenderStyle<T = any>(data?: T): {
+      [key: string]: string | number | boolean,
+    } {
+      return {}
+    }
+  
+    public componentWithWrapper(editor: ReactEditor): ReactEditor {
+      return editor;
+    }
+  
+    public componentTerminate(): void {
+      this.event$.unsubscribe();
+    }
+  
+    public componentRenderInterceptor<R = any>(
+      container: SlateContainer, 
+      props: TLeafRenderProps | TElementRenderProps
+    ): R {
+      return;
+    }
+  
+    public componentRangeIsMarked<T = any>(value: T): boolean {
+      return false;
+    }
+  
+    public componentDeserialize<T extends HTMLElement>(el: T): { [key: string]: any } {
+      return {};
+    }
+  }`, 'utf8');
 }
 
 function createTestFile(test, project) {
