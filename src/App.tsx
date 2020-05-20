@@ -8,7 +8,7 @@ const initContent = [
     id: '5e53c7e4-323c-4dbf-af59-fe821c6d759a',
     type: 'P',
     children: [
-      { text: 'Type some text ...' }
+      { text: '' }
     ]
   }
 ];
