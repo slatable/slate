@@ -24,6 +24,9 @@ const getClientEnvironment = require('./env');
 const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
 const ForkTsCheckerWebpackPlugin = require('react-dev-utils/ForkTsCheckerWebpackPlugin');
 const typescriptFormatter = require('react-dev-utils/typescriptFormatter');
+const createSymLink = require('./symlink');
+
+createSymLink();
 
 const postcssNormalize = require('postcss-normalize');
 
@@ -298,7 +301,6 @@ module.exports = function(webpackEnv) {
           'scheduler/tracing': 'scheduler/tracing-profiling',
         }),
         ...(modules.webpackAliases || {}),
-        ...readAliasForPackages(),
       },
       plugins: [
         // Adds support for installing with Plug'n'Play, leading to faster installs and adding
@@ -668,25 +670,3 @@ module.exports = function(webpackEnv) {
     performance: false,
   };
 };
-
-
-function readAliasForPackages() {
-  const dirs = fs.readdirSync(path.resolve(process.cwd(), 'packages'), 'utf8');
-  const out = {};
-  const pkgpath = path.resolve(process.cwd(), 'node_modules');
-  dirs.forEach(dir => {
-    const z = path.resolve(process.cwd(), 'packages', dir);
-    const p = path.resolve(z, 'package.json');
-    const x = path.resolve(z, 'dist');
-    if (fs.existsSync(p)) {
-      const pkg = require(p);
-      out[pkg.name] = x;
-      fs.symlinkSync(
-        path.resolve(pkgpath, pkg.name),
-        x + '/index.js',
-        'dir'
-      )
-    }
-  })
-  return out;
-}

@@ -1,10 +1,10 @@
-import { EventEmitter } from '@flowx/events';
 import { TSlateFunction } from './function';
 import { ReactEditor, withReact } from 'slate-react';
 import { withHistory } from 'slate-history';
 import { jsx } from 'slate-hyperscript';
 import { createEditor, Editor, Range, Transforms, Text } from 'slate';
 import { generate } from 'randomstring';
+import { EventEmitter } from './events';
 import { TElementNode } from './transforms';
 import { SlateToolbar } from './toolbar';
 
@@ -73,6 +73,7 @@ export class SlateContainer extends EventEmitter {
     const func = new classModule(this);
     const wrappers: Map<string, (editor: ReactEditor) => ReactEditor> = this.extras.get('wrappers');
     if (func.componentWithWrapper) wrappers.set(classModule.namespace, func.componentWithWrapper.bind(func));
+    this.functions.set(classModule.namespace, func);
     return this;
   }
 
@@ -121,6 +122,7 @@ export class SlateContainer extends EventEmitter {
       if (['string','number','boolean'].indexOf(typeof marks[namespace]) > -1) return [!!marks[namespace], marks[namespace]];
       return [!!Object.keys(marks[namespace]).length, marks[namespace]];
     }
+    return [marks ? marks[namespace] === true : false, marks[namespace]];
   }
 
   public useRangeElement(namespace: string | string[]): [boolean, TElementNode] {
@@ -138,7 +140,7 @@ export class SlateContainer extends EventEmitter {
     if (active) {
       Editor.removeMark(this.editor, namespace);
     } else {
-      Editor.addMark(this.editor, namespace, value);
+      Editor.addMark(this.editor, namespace, value === undefined ? true : value);
     }
     return this;
   }
@@ -195,7 +197,7 @@ export class SlateContainer extends EventEmitter {
     }
   }
 
-  public focus(editor: ReactEditor) {
-    Transforms.select(editor, this.blurSelection);
+  public focus() {
+    Transforms.select(this.editor, this.blurSelection);
   }
 }

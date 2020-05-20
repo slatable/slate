@@ -18,10 +18,10 @@ export interface TElementRenderProps {
 
 export function ElementRender(container: SlateContainer): React.FunctionComponent<TElementRenderProps> {
   return memo(props => {
-    if (container.functions.has(props.element.type)) return <p {...props.attributes}>{props.children}</p>;
+    if (container.functions.has(props.element.type)) return <p id={props.element.id} key={props.element.id} {...props.attributes}>{props.children}</p>;
     const object = container.functions.get(props.element.type);
-    if (!object.componentRenderNodes) return <p {...props.attributes}>{props.children}</p>;
-    const styles = props.element.style
+    if (!object || !object.componentRenderNodes) return <p id={props.element.id} key={props.element.id} {...props.attributes}>{props.children}</p>;
+    const styles = (props.element.style || [])
       .filter(style => container.functions.has(style[0]) && container.functions.get(style[0]).type === 'attr')
       .map(style => container.functions.get(style[0]).componentRenderStyle(style[1]))
       .reduce((value, style) => Object.assign(value, style), {});

@@ -57,7 +57,7 @@ export class SlateToolbar {
 
       if (items.length) {
         if (index < _text.length - 1) items.push(DividerComponent);
-        return React.createElement(React.Fragment, null, items);
+        return React.createElement(React.Fragment, { key: index }, items);
       }
       
     }).filter(Boolean);

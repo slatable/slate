@@ -8,6 +8,7 @@ import React from 'react';
     constructor(container: SlateContainer) {
       super(container, 'leaf');
       this.event$ = this.container.on('editor:' + BoldFunction.namespace).subscribe(() => {
+        this.container.focus();
         this.setLeaf(BoldFunction.namespace);
       });
     }

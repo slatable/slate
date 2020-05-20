@@ -31,6 +31,9 @@
     "@types/react": "^16.9.35",
     "react": "^16.13.1",
     "slate": "^0.58.1",
-    "slate-react": "^0.58.1"
+    "slate-react": "^0.58.1",
+    "@reactivex/rxjs": "^6.5.5",
+    "rxjs": "^6.5.5",
+    "rxjs-compat": "^6.5.5"
   }
 }

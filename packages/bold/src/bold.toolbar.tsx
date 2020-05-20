@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { TSlateToolbar, SlateContainer } from '@slatable/slate';
 import { BoldFunction } from './bold.function';
 export class BoldToolBar implements TSlateToolbar {
   static namespace = 'BoldToolbar';
+  static icon: JSX.Element;
   private readonly container: SlateContainer;
   constructor(container: SlateContainer) {
     this.container = container;
@@ -11,7 +12,10 @@ export class BoldToolBar implements TSlateToolbar {
 
   render(): React.FunctionComponent {
     return props => {
-      return <span>加粗</span>;
+      const onClick = useCallback(() => {
+        this.container.cast('editor:' + BoldFunction.namespace)
+      }, []);
+      return <span onClick={onClick}>{BoldToolBar.icon || 'Bold'}</span>;
     }
   }
 
