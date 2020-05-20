@@ -121,13 +121,13 @@ function createIndexFile(src, project) {
       return <div></div>
     }
   
-    public componentRenderStyle<T = any>(data?: T): {
+    // public componentRenderStyle<T = any>(data?: T): {
       [key: string]: string | number | boolean,
     } {
       return {}
     }
   
-    public componentWithWrapper(editor: ReactEditor): ReactEditor {
+    // public componentWithWrapper(editor: ReactEditor): ReactEditor {
       return editor;
     }
   
@@ -135,18 +135,18 @@ function createIndexFile(src, project) {
       this.event$.unsubscribe();
     }
   
-    public useRenderHook<R = any>(
+    // public useRenderHook<R = any>(
       container: SlateContainer, 
       props: TLeafRenderProps | TElementRenderProps
     ): R {
       return;
     }
   
-    public useRangeMardHook<T = any>(value: T): boolean {
+    // public useRangeMardHook<T = any>(value: T): boolean {
       return false;
     }
   
-    public componentDeserialize<T extends HTMLElement>(el: T): { [key: string]: any } {
+    // public componentDeserialize<T extends HTMLElement>(el: T): { [key: string]: any } {
       return {};
     }
   }`, 'utf8');
