@@ -27,9 +27,7 @@ function App() {
     <Provider>
       <div className="editor-header"><ToolBar format={BoldToolBar.namespace} /></div>
       <div className="editor-content">
-        <div className="wrap">
-          <Editor spellCheck autoFocus container={container} placeholder="请输入文章内容..." className="article" />
-        </div>
+        <Editor spellCheck autoFocus container={container} placeholder="请输入文章内容..." className="article" />
       </div>
     </Provider>
   );

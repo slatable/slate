@@ -5,8 +5,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #f8f9fa;
   font-size:12px;
+  background-color: #fff;
 }
 
 code {
@@ -16,9 +16,4 @@ code {
 
 body,html,#root{
   height: 100%;
-}
-
-#root{
-  display: flex;
-  flex-direction: column;
 }

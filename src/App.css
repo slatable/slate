@@ -1,66 +1,58 @@
 .editor-header{
-  height: 50px;
+  height: 40px;
   background-color: #fff;
   display: flex;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
-  box-shadow: 0 0 10px 0 rgba(0,0,0,.1);
   width: 100%;
-}
-.editor-content{
-  flex:1;
-  overflow-x: hidden;
-  overflow-y: auto;
-  padding-top: 15px;
-  box-sizing: border-box;
-}
-
-.editor-content .wrap {
-  background-color: #fff;
-  box-shadow: 0 0 10px 0 rgba(0,0,0,.06);
-  width: 760px;
-  margin: 0 auto;
-  padding: 30px 40px;
-  min-height: 100%;
-  box-sizing: border-box;
+  position: fixed;
+  top:0;
+  left: 0;
+  width: 100%;
+  border-bottom: 1px solid #eee;
+  padding: 0 40px;
 }
 
-.editor-content .wrap .article {
+.editor-content {
+  padding: 60px 40px 20px 40px;
+}
+
+.editor-content .article {
   line-height: 1.5;
   color:#555;
   font-size:14px;
   font-family: Microsoft YaHei;
 }
 
-.editor-content .wrap .article p{
+.editor-content .article p{
   margin: 0 0 10px 0;
 }
 
-.editor-content .wrap .article h1{
+.editor-content .article h1{
   font-size: 26px;
 }
 
-.editor-content .wrap .article h2{
+.editor-content .article h2{
   font-size: 24px;
 }
 
-.editor-content .wrap .article h3{
+.editor-content .article h3{
   font-size: 22px;
 }
 
-.editor-content .wrap .article h4{
+.editor-content .article h4{
   font-size: 20px;
 }
 
-.editor-content .wrap .article h5{
+.editor-content .article h5{
   font-size: 18px;
 }
 
-.editor-content .wrap .article h6{
+.editor-content .article h6{
   font-size: 16px;
 }
 
-.editor-content .wrap .article strong{
+.editor-content .article strong{
   color:#000;
   padding: 0 3px;
 }
