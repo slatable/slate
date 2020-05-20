@@ -134,6 +134,6 @@ export abstract class TSlateFunction extends SlateFunction {
   ): R;
 
   // 是否选取选中
-  abstract useRangeMardHook?<T = any>(value: T): boolean;
+  abstract useRangeMarkedHook?<T = any>(value: T): boolean;
 }
 

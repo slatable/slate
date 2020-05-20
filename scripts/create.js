@@ -108,6 +108,7 @@ function createIndexFile(src, project) {
   
   export class ${name}Function extends SlateFunction implements TSlateFunction {
     static readonly namespace = '${name}';
+    private readonly event$: Subscription;
     constructor(container: SlateContainer) {
       super(container, 'leaf');
       this.event$ = this.container.on('editor:' + ${name}Function.namespace).subscribe(() => {
@@ -115,7 +116,7 @@ function createIndexFile(src, project) {
       });
     }
   
-    public componentRenderNodes(style: { [key: string]: any }, props: TLeafRenderProps | TElementRenderProps) {
+    public componentRenderNodes(props: TLeafRenderProps | TElementRenderProps, style: { [key: string]: any }, data: any) {
       return <div></div>
     }
   
@@ -133,14 +134,14 @@ function createIndexFile(src, project) {
       this.event$.unsubscribe();
     }
   
-    public componentRenderInterceptor<R = any>(
+    public useRenderHook<R = any>(
       container: SlateContainer, 
       props: TLeafRenderProps | TElementRenderProps
     ): R {
       return;
     }
   
-    public componentRangeIsMarked<T = any>(value: T): boolean {
+    public useRangeMardHook<T = any>(value: T): boolean {
       return false;
     }
   
