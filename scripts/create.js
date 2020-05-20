@@ -117,7 +117,7 @@ function createIndexFile(src, project) {
       });
     }
   
-    public componentRenderNodes(props: TLeafRenderProps | TElementRenderProps, style: { [key: string]: any }, data: any) {
+    // public componentRenderNodes(props: TLeafRenderProps | TElementRenderProps, style: { [key: string]: any }, data: any) {
       return <div></div>
     }
   
