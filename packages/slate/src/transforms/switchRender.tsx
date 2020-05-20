@@ -14,7 +14,7 @@ export function SwtichRender(container: SlateContainer): React.FunctionComponent
       for (const key in props.leaf) {
         if (container.functions.has(key)) {
           const object = container.functions.get(key);
-          const data = object.componentRenderInterceptor ? object.componentRenderInterceptor(container, props) : null;
+          const data = object.useRenderHook ? object.useRenderHook(container, props) : null;
           children = object.componentRenderNodes({
             attributes: props.attributes,
             children,

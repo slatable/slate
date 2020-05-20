@@ -121,19 +121,19 @@ export abstract class TSlateFunction extends SlateFunction {
   // 外部包裹
   abstract componentWithWrapper?(editor: ReactEditor): ReactEditor;
 
+  // 反序列化HTML到JSON数据
+  abstract componentDeserialize?<T extends HTMLElement>(el: T): { [key: string]: any }
+
   // 生命周期：销毁
   abstract componentTerminate?(): void;
 
   // 渲染拦截器
-  abstract componentRenderInterceptor?<R = any>(
+  abstract useRenderHook?<R = any>(
     container: SlateContainer, 
     props: TLeafRenderProps | TElementRenderProps
   ): R;
 
   // 是否选取选中
-  abstract componentRangeIsMarked?<T = any>(value: T): boolean;
-
-  // 反序列化HTML到JSON数据
-  abstract componentDeserialize?<T extends HTMLElement>(el: T): { [key: string]: any }
+  abstract useRangeMardHook?<T = any>(value: T): boolean;
 }
 

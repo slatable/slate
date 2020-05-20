@@ -25,7 +25,7 @@ export function ElementRender(container: SlateContainer): React.FunctionComponen
       .filter(style => container.functions.has(style[0]) && container.functions.get(style[0]).type === 'attr')
       .map(style => container.functions.get(style[0]).componentRenderStyle(style[1]))
       .reduce((value, style) => Object.assign(value, style), {});
-    const data = object.componentRenderInterceptor ? object.componentRenderInterceptor(container, props) : null;
+    const data = object.useRenderHook ? object.useRenderHook(container, props) : null;
     return object.componentRenderNodes(props, styles, data) || null;
   });
 }

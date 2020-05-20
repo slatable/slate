@@ -109,9 +109,9 @@ export class SlateContainer extends EventEmitter {
     if (!marks || !marks[namespace]) {
       if (this.editor.selection && Range.isExpanded(this.editor.selection) && this.functions.has(namespace)) {
         const object = this.functions.get(namespace);
-        if (object.componentRangeIsMarked) {
+        if (object.useRangeMardHook) {
           const [match] = Editor.nodes(this.editor, {
-            match: object.componentRangeIsMarked.bind(object),
+            match: object.useRangeMardHook.bind(object),
           });
           if (match && match[0]) marks = match[0];
         }
