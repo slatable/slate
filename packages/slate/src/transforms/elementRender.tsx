@@ -26,6 +26,6 @@ export function ElementRender(container: SlateContainer): React.FunctionComponen
       .map(style => container.functions.get(style[0]).componentRenderStyle(style[1]))
       .reduce((value, style) => Object.assign(value, style), {});
     const data = object.componentRenderInterceptor ? object.componentRenderInterceptor(container, props) : null;
-    return object.componentRenderNodes(styles, props, data) || null;
+    return object.componentRenderNodes(props, styles, data) || null;
   });
 }

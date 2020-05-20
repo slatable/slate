@@ -108,8 +108,8 @@ export abstract class TSlateFunction extends SlateFunction {
 
   // 渲染组件
   abstract componentRenderNodes?(
-    style: { [key: string]: any }, 
     props: TLeafRenderProps | TElementRenderProps,
+    style: { [key: string]: any }, 
     data?: any,
   ): React.ReactElement;
 

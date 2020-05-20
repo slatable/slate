@@ -15,11 +15,11 @@ export function SwtichRender(container: SlateContainer): React.FunctionComponent
         if (container.functions.has(key)) {
           const object = container.functions.get(key);
           const data = object.componentRenderInterceptor ? object.componentRenderInterceptor(container, props) : null;
-          children = object.componentRenderNodes({}, {
+          children = object.componentRenderNodes({
             attributes: props.attributes,
             children,
             leaf: props.leaf
-          }, data);
+          }, {}, data);
         }
       }
     }
