@@ -128,7 +128,7 @@ export class SlateContainer extends EventEmitter {
         return node.type === namespace;
       }
     });
-    return [!!match, match[0]];
+    return [!!match, match ? match[0] : null];
   }
 
   public toggleMark<T = any>(namespace: string, value: T) {

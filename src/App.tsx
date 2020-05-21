@@ -1,21 +1,13 @@
 import './App.css';
 import React from 'react';
 import { BoldToolBar } from '@slatable/bold';
+import { TitleFunction } from '@slatable/title';
 import { SlateContainer, CreateNewProvider, Editor, CreateNewToolbar } from '@slatable/slate';
-
-const initContent = [
-  {
-    id: '5e53c7e4-323c-4dbf-af59-fe821c6d759a',
-    type: 'P',
-    children: [
-      { text: '' }
-    ]
-  }
-];
+import { initContent } from './data';
 
 const container = new SlateContainer();
 const ToolBar = CreateNewToolbar(container);
-const Provider = CreateNewProvider(container, initContent);
+const Provider = CreateNewProvider(container, TitleFunction.useTitle('朱自清 - 荷塘月色', initContent));
 
 container.on('content').subscribe(value => console.log('Editor Value:', value));
 

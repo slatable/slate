@@ -51,7 +51,7 @@ export class SlateTool {
     return pool
   }
 
-  getStatus(editor: ReactEditor): 'actived' | 'normal' | 'disabled' {
+  public getStatus(editor: ReactEditor): 'actived' | 'normal' | 'disabled' {
     const elements = this.matchType('element');
     if (elements.length) {
       for (let i = 0; i < elements.length; i++) {
@@ -93,7 +93,7 @@ export class SlateToolbar {
     if (this.stacks.has(classModule.namespace)) return this;
     const tool = new classModule(this.container);
     this.stacks.set(classModule.namespace, tool);
-    return this;
+    return tool;
   }
 
   public unRegister(namespace: string) {
@@ -101,8 +101,8 @@ export class SlateToolbar {
       const tool = this.stacks.get(namespace);
       if (tool.componentTerminate) tool.componentTerminate();
       this.stacks.delete(namespace);
+      return tool;
     }
-    return this;
   }
 
   private buildTools(editor: ReactEditor, text: string, DividerComponent: JSX.Element) {

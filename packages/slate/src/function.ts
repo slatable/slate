@@ -8,7 +8,7 @@ import { Transforms } from 'slate';
 export class SlateFunction {
   public readonly container: SlateContainer;
   public readonly type: 'element' | 'leaf' | 'attr';
-  constructor(container: SlateContainer, type: 'element' | 'leaf' | 'attr') {
+  constructor(container: SlateContainer, type: SlateFunction['type']) {
     this.container = container;
     this.type = type;
   }

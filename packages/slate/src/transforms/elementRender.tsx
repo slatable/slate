@@ -18,7 +18,7 @@ export interface TElementRenderProps {
 
 export function ElementRender(container: SlateContainer): React.FunctionComponent<TElementRenderProps> {
   return memo(props => {
-    if (container.functions.has(props.element.type)) return <p id={props.element.id} key={props.element.id} {...props.attributes}>{props.children}</p>;
+    if (!container.functions.has(props.element.type)) return <p id={props.element.id} key={props.element.id} {...props.attributes}>{props.children}</p>;
     const object = container.functions.get(props.element.type);
     if (!object || !object.componentRenderNodes) return <p id={props.element.id} key={props.element.id} {...props.attributes}>{props.children}</p>;
     const styles = (props.element.style || [])
