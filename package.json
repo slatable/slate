@@ -151,5 +151,9 @@
     "presets": [
       "react-app"
     ]
+  },
+  "dependencies": {
+    "@types/classnames": "^2.2.10",
+    "classnames": "^2.2.6"
   }
 }

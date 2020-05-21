@@ -13,6 +13,18 @@
   padding: 0 40px;
 }
 
+.editor-header .tool.actived {
+  color:#ff0000;
+}
+
+.editor-header .tool.normal {
+  color:#333;
+}
+
+.editor-header .tool.disabled {
+  color:#eee;
+}
+
 .editor-header:after{
   position: absolute;
   top: 40px;

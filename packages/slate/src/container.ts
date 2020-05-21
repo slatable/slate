@@ -13,13 +13,7 @@ export class SlateContainer extends EventEmitter {
   public readonly functions: Map<string, TSlateFunction> = new Map();
   public readonly toolbar = new SlateToolbar(this);
   private readonly counter: Map<string, number> = new Map();
-  private readonly extras: Map<string, any> = new Map();
   public blurSelection: Range;
-
-  constructor() {
-    super();
-    this.extras.set('wrappers', new Map<string, (editor: ReactEditor) => ReactEditor>());
-  }
 
   static createNewID(weight: number = 5) {
     return generate(weight);
@@ -38,9 +32,11 @@ export class SlateContainer extends EventEmitter {
    * 插件：通过reduce插件来扩展功能
    */
   public createEditor() {
-    const editor = this.withHtml(this.onContext(withReact(withHistory(createEditor()))));
-    const wrappers: Map<string, (editor: ReactEditor) => ReactEditor> = this.extras.get('wrappers');
-    return Array.from(wrappers).reduce((prev, current) => current[1](prev), editor);
+    this.editor = withReact(withHistory(createEditor()))
+    const editor = this.withHtml(this.onContext(this.editor));
+    return Array.from(this.functions)
+      .filter(func => !!func[1].componentWithWrapper)
+      .reduce((prev, current) => current[1].componentWithWrapper(prev), editor);
   }
 
   /**
@@ -69,12 +65,10 @@ export class SlateContainer extends EventEmitter {
     } else {
       this.counter.set(classModule.namespace, this.counter.get(classModule.namespace) + 1);
     }
-    if (this.functions.has(classModule.namespace)) return this;
+    if (this.functions.has(classModule.namespace)) return this.functions.get(classModule.namespace);
     const func = new classModule(this);
-    const wrappers: Map<string, (editor: ReactEditor) => ReactEditor> = this.extras.get('wrappers');
-    if (func.componentWithWrapper) wrappers.set(classModule.namespace, func.componentWithWrapper.bind(func));
     this.functions.set(classModule.namespace, func);
-    return this;
+    return func;
   }
 
   /**
@@ -86,31 +80,29 @@ export class SlateContainer extends EventEmitter {
     readonly namespace: string 
   }) {
     namespace = typeof namespace !== 'string' ? namespace.namespace : namespace;
+    if (!(this.functions.has(namespace))) throw new Error('cannot find the function of ' + namespace);
     if (this.counter.has(namespace)) {
       const count = this.counter.get(namespace);
       if (count > 1) {
         this.counter.set(namespace, count - 1);
-        return this;
+        return this.functions.get(namespace);
       }
       this.counter.delete(namespace);
     }
-    if (this.functions.has(namespace)) {
-      const target = this.functions.get(namespace);
-      if (target.componentTerminate) target.componentTerminate();
-      this.functions.delete(namespace);
-    }
-    const wrappers: Map<string, (editor: ReactEditor) => ReactEditor> = this.extras.get('wrappers');
-    if (wrappers.has(namespace)) wrappers.delete(namespace);
-    return this;
+    const target = this.functions.get(namespace);
+    if (target.componentTerminate) target.componentTerminate();
+    this.functions.delete(namespace);
+    return target;
   }
 
-  public useRangeLeaf<T = any>(namespace: string): [boolean, T] {
-    let marks = Editor.marks(this.editor);
+  public useRangeLeaf<T = any>(namespace: string, editor?: ReactEditor): [boolean, T] {
+    const _editor = editor || this.editor;
+    let marks = Editor.marks(_editor);
     if (!marks || !marks[namespace]) {
-      if (this.editor.selection && Range.isExpanded(this.editor.selection) && this.functions.has(namespace)) {
+      if (_editor.selection && Range.isExpanded(_editor.selection) && this.functions.has(namespace)) {
         const object = this.functions.get(namespace);
         if (object.useRangeMarkedHook) {
-          const [match] = Editor.nodes(this.editor, {
+          const [match] = Editor.nodes(_editor, {
             match: object.useRangeMarkedHook.bind(object),
           });
           if (match && match[0]) marks = match[0];
@@ -122,11 +114,15 @@ export class SlateContainer extends EventEmitter {
       if (['string','number','boolean'].indexOf(typeof marks[namespace]) > -1) return [!!marks[namespace], marks[namespace]];
       return [!!Object.keys(marks[namespace]).length, marks[namespace]];
     }
-    return [marks ? marks[namespace] === true : false, marks[namespace]];
+    return [
+      marks ? marks[namespace] === true : false, 
+      marks ? marks[namespace] : null
+    ];
   }
 
-  public useRangeElement(namespace: string | string[]): [boolean, TElementNode] {
-    const [match] = Editor.nodes<TElementNode>(this.editor, {
+  public useRangeElement(namespace: string | string[], editor?: ReactEditor): [boolean, TElementNode] {
+    const _editor = editor || this.editor;
+    const [match] = Editor.nodes<TElementNode>(_editor, {
       match: node => {
         if (Array.isArray(namespace)) return namespace.indexOf(node.type as string) > -1;
         return node.type === namespace;

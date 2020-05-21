@@ -1,25 +1,26 @@
 import React, { useCallback } from 'react';
-import { TSlateToolbar, SlateContainer } from '@slatable/slate';
+import { TSlateTool, SlateTool, TToolProps, SlateContainer } from '@slatable/slate';
 import { BoldFunction } from './bold.function';
-export class BoldToolBar implements TSlateToolbar {
+import classnames from 'classnames';
+export class BoldToolBar extends SlateTool implements TSlateTool {
   static namespace = 'BoldToolbar';
   static icon: JSX.Element;
-  private readonly container: SlateContainer;
   constructor(container: SlateContainer) {
-    this.container = container;
-    this.container.register(BoldFunction);
+    super(container);
+    this.register(BoldFunction);
   }
 
-  render(): React.FunctionComponent {
-    return props => {
-      const onClick = useCallback(() => {
-        this.container.cast('editor:' + BoldFunction.namespace)
-      }, []);
-      return <span onClick={onClick}>{BoldToolBar.icon || 'Bold'}</span>;
-    }
+  render(props: TToolProps) {
+    const onClick = useCallback((e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
+      e.preventDefault();
+      if (props.status !== 'disabled') {
+        this.container.cast('editor:' + BoldFunction.namespace);
+      }
+    }, []);
+    return <span onMouseDown={onClick} className={classnames(props.status, props.className)}>{BoldToolBar.icon || 'B'}</span>;
   }
 
   componentTerminate() {
-    this.container.unRegister(BoldFunction);
+    this.unRegister(BoldFunction);
   }
 }

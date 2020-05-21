@@ -1,7 +1,7 @@
 {
-  "name": "@slatable/bold",
+  "name": "@slatable/title",
   "version": "1.0.0",
-  "description": "slatable bold",
+  "description": "slatable title",
   "author": "",
   "homepage": "https://github.com/slatable/core",
   "license": "MIT",
@@ -22,7 +22,6 @@
   },
   "dependencies": {
     "@slatable/slate": "^1.0.0",
-    "classnames": "^2.2.6",
     "slate-react": "^0.58.1"
   },
   "peerDependencies": {

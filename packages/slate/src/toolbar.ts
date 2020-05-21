@@ -1,15 +1,85 @@
 import React, { memo } from 'react';
-import { ReactEditor } from 'slate-react';
+import { ReactEditor, useSlate } from 'slate-react';
 import { SlateContainer } from './container';
+import { TSlateFunction } from './function';
 
-export abstract class TSlateToolbar {
+export interface TToolProps<T = any> {
+  data?: T, 
+  className: string,
+  status: 'actived' | 'normal' | 'disabled',
+}
+
+export class SlateTool {
+  private readonly allowTypes: Set<TSlateFunction> = new Set();
+  public readonly container: SlateContainer;
+  constructor(container: SlateContainer) {
+    this.container = container;
+  }
+
+  public register<T extends TSlateFunction>(...classModules: { new(container: SlateContainer): T, namespace: string }[]) {
+    for (let i = 0; i < classModules.length; i++) {
+      const func = this.container.register(classModules[i]);
+      this.allowTypes.add(func);
+    }
+  }
+
+  public unRegister<T extends TSlateFunction>(...classModules: { new(container: SlateContainer): T, namespace: string }[]) {
+    for (let i = 0; i < classModules.length; i++) {
+      const func = this.container.unRegister(classModules[i]);
+      this.allowTypes.delete(func);
+    }
+  }
+
+  private isRange() {
+    const selection = this.container.editor.selection;
+    if (!selection) return false;
+    const anchor = selection.anchor;
+    const focus = selection.focus;
+    if (anchor.path[0] !== focus.path[0]) return true;
+    if (anchor.path[1] !== focus.path[1]) return true;
+    if (focus.offset - anchor.offset !== 0) return true;
+    return false;
+  }
+
+  private matchType(type: 'element' | 'leaf') {
+    const pool: TSlateFunction[] = [];
+    for (const chunk of this.allowTypes) {
+      if (chunk.type === type) {
+        pool.push(chunk);
+      }
+    }
+    return pool
+  }
+
+  getStatus(editor: ReactEditor): 'actived' | 'normal' | 'disabled' {
+    const elements = this.matchType('element');
+    if (elements.length) {
+      for (let i = 0; i < elements.length; i++) {
+        const element = elements[i];
+        const [active] = this.container.useRangeElement((element.constructor as any).namespace, editor);
+        if (active) return 'actived';
+      }
+      return 'normal';
+    }
+    const leafs = this.matchType('leaf');
+    for (let i = 0; i < leafs.length; i++) {
+      const leaf = leafs[i];
+      const [active] = this.container.useRangeLeaf((leaf.constructor as any).namespace, editor);
+      if (active) return 'actived';
+    }
+    if (this.isRange()) return 'normal';
+    return 'disabled';
+  }
+}
+
+export abstract class TSlateTool extends SlateTool {
   static readonly namespace: string;
-  abstract render(editor: ReactEditor): React.FunctionComponent<{ data?: string }>;
+  abstract render: React.FunctionComponent<TToolProps>;
   abstract componentTerminate?(): void;
 }
 
 export class SlateToolbar {
-  private readonly stacks: Map<string, TSlateToolbar> = new Map();
+  private readonly stacks: Map<string, TSlateTool> = new Map();
   private readonly container: SlateContainer;
 
   constructor(container: SlateContainer) {
@@ -17,7 +87,7 @@ export class SlateToolbar {
   }
 
   public register(classModule: { 
-    new(container: SlateContainer): TSlateToolbar, 
+    new(container: SlateContainer): TSlateTool, 
     readonly namespace: string 
   }) {
     if (this.stacks.has(classModule.namespace)) return this;
@@ -35,10 +105,10 @@ export class SlateToolbar {
     return this;
   }
 
-  private buildTools(text: string, DividerComponent: JSX.Element) {
+  private buildTools(editor: ReactEditor, text: string, DividerComponent: JSX.Element) {
     const _text = text.split('|');
     return _text.map((value, index) => {
-      const items: React.FunctionComponentElement<{ data?: string }>[] = [];
+      const items: React.FunctionComponentElement<TToolProps>[] = [];
 
       value.split('-').forEach(val => {
         const i = val.indexOf(':');
@@ -50,8 +120,10 @@ export class SlateToolbar {
         }
 
         if (this.stacks.has(key)) {
-          const CustomComponent = this.stacks.get(key).render(this.container.editor);
-          items.push(React.createElement(CustomComponent, { data, key }));
+          const target = this.stacks.get(key);
+          const CustomComponent = target.render.bind(target);
+          const status = target.getStatus(editor);
+          items.push(React.createElement(CustomComponent, { data, key, className: 'tool', status }));
         }
       });
 
@@ -65,7 +137,8 @@ export class SlateToolbar {
 
   public component(DividerComponent: JSX.Element): React.FunctionComponent<{ format: string }> {
     return memo((props) => {
-      const items = this.buildTools(props.format, DividerComponent);
+      const editor = useSlate();
+      const items = this.buildTools(editor, props.format, DividerComponent);
       return React.createElement(React.Fragment, null, items);
     }, (prev, next) => prev.format !== next.format);
   }
