@@ -8,20 +8,18 @@ export class TitleFunction extends SlateFunction implements TSlateFunction {
   static readonly namespace = 'Title';
   private readonly event$: Subscription;
 
-  static useTitle<T extends any[]>(placeholder: string, data: T) {
+  static useTitle<T extends any[]>(container: SlateContainer, data: T, placeholder: string): [T, TSlateFunction] {
+    const func = container.register(TitleFunction);
     data.unshift({
       id: 'editor-title',
       type: TitleFunction.namespace,
       children: [
         {
-          text: placeholder
+          text: placeholder || 'Please type words...'
         }
       ]
     });
-    return (container: SlateContainer): T => {
-      container.register(TitleFunction);
-      return data;
-    }
+    return [data, func];
   }
 
   constructor(container: SlateContainer) {

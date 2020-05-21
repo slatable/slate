@@ -52,6 +52,21 @@ export class SlateTool {
   }
 
   public getStatus(editor: ReactEditor): 'actived' | 'normal' | 'disabled' {
+    const stacks = this.container.functionStacks;
+    if (stacks.size) {
+      for (const stack of stacks) {
+        const namespace = stack;
+        const deps = this.container.dependencies.has(namespace) ? this.container.dependencies.get(namespace) : null;
+        if (deps instanceof Set) {
+          const i = this.allowFunctions.size;
+          let j = 0
+          for (const func of this.allowFunctions) {
+            if (!deps.has((func.constructor as any).namespace)) j++;
+          }
+          if (j === i) return 'disabled';
+        }
+      }
+    }
     const elements = this.matchType('element');
     if (elements.length) {
       for (let i = 0; i < elements.length; i++) {

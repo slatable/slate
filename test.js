@@ -12,3 +12,17 @@ if (!fs.existsSync(dir)) {
 createSymlink(src, dist, 'exec');
 
 console.log(require('@slatable/slate'))
+
+class a {
+  // static namespace = 'a';
+  allow() {
+    console.log(this.constructor.namespace);
+  }
+}
+
+class b extends a {
+  static namespace = 'b';
+}
+
+const c = new b();
+c.allow()

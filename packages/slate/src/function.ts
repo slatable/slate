@@ -13,6 +13,14 @@ export class SlateFunction {
     this.type = type;
   }
 
+  public allow<T extends TSlateFunction>(...classModules: ({ new (container: SlateContainer): T, namespace: string } | string)[]) {
+    const names = classModules.map(classModule => {
+      if (typeof classModule === 'string') return classModule;
+      return classModule.namespace;
+    });
+    this.container.addDependencies((this.constructor as { new (container: SlateContainer): T, namespace: string }).namespace, ...names);
+  }
+
   public setLeaf(namespace: string, data?: any) {
     this.container.toggleMark(namespace, data);
     return this;

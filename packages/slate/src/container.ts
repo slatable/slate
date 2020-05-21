@@ -13,16 +13,62 @@ export class SlateContainer extends EventEmitter {
   public readonly functions: Map<string, TSlateFunction> = new Map();
   public readonly toolbar = new SlateToolbar(this);
   private readonly counter: Map<string, number> = new Map();
+  public readonly dependencies: Map<string, Set<string>> = new Map();
   public blurSelection: Range;
 
   static createNewID(weight: number = 5) {
     return generate(weight);
   }
 
+  get functionStacks(): Set<string> {
+    if (!this.editor || !this.editor.selection) return new Set<string>();
+    const selection = this.editor.selection;
+    const anchor = selection.anchor;
+    const focus = selection.focus;
+    const data: any[] = this.editor.children.slice(anchor.path[0], focus.path[0] + 1);
+    const pools: Set<string> = new Set();
+    data.forEach((dat, index) => {
+      switch (index) {
+        case 0: this.pushFunctions({
+          type: dat.type,
+          children: dat.children.slice(anchor.path[1]),
+          style: dat.style,
+        }, pools); break;
+        case data.length - 1: this.pushFunctions({
+          type: dat.type,
+          children: dat.children.slice(0, focus.path[1] + 1),
+          style: dat.style,
+        }, pools); break;
+        default: this.pushFunctions(dat, pools);
+      }
+    });
+    return pools;
+  }
+
+  private pushFunctions(dat: any, pools: Set<string>) {
+    if (this.functions.has(dat.type)) {
+      pools.add(dat.type);
+    }
+    dat.children.forEach((child: any) => {
+      Object.keys(child)
+        .filter(key => this.functions.has(key))
+        .forEach(key => pools.add(key))
+    });
+    (dat.style || [])
+      .filter((style: any) => this.functions.has(style[0]))
+      .forEach((style: any) => pools.add(style[0]));
+  }
+
   public setLastSelectionWhenBlur() {
     if (this.editor || this.editor.selection) {
       this.blurSelection = this.editor.selection;
     }
+  }
+
+  public addDependencies(key: string, ...args: string[]) {
+    if (!this.dependencies.has(key)) this.dependencies.set(key, new Set());
+    args.forEach(arg => this.dependencies.get(key).add(arg));
+    return this;
   }
 
   /**

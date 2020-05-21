@@ -12,7 +12,13 @@
   /* border-bottom: 1px solid #eee; */
   padding: 0 40px;
 }
-
+.editor-header .tool{
+  display: block;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  line-height: 30px;
+}
 .editor-header .tool.actived {
   color:#ff0000;
   cursor: pointer;
