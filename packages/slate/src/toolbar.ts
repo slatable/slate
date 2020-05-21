@@ -10,7 +10,7 @@ export interface TToolProps<T = any> {
 }
 
 export class SlateTool {
-  private readonly allowTypes: Set<TSlateFunction> = new Set();
+  private readonly allowFunctions: Set<TSlateFunction> = new Set();
   public readonly container: SlateContainer;
   constructor(container: SlateContainer) {
     this.container = container;
@@ -19,14 +19,14 @@ export class SlateTool {
   public register<T extends TSlateFunction>(...classModules: { new(container: SlateContainer): T, namespace: string }[]) {
     for (let i = 0; i < classModules.length; i++) {
       const func = this.container.register(classModules[i]);
-      this.allowTypes.add(func);
+      this.allowFunctions.add(func);
     }
   }
 
   public unRegister<T extends TSlateFunction>(...classModules: { new(container: SlateContainer): T, namespace: string }[]) {
     for (let i = 0; i < classModules.length; i++) {
       const func = this.container.unRegister(classModules[i]);
-      this.allowTypes.delete(func);
+      this.allowFunctions.delete(func);
     }
   }
 
@@ -43,7 +43,7 @@ export class SlateTool {
 
   private matchType(type: 'element' | 'leaf') {
     const pool: TSlateFunction[] = [];
-    for (const chunk of this.allowTypes) {
+    for (const chunk of this.allowFunctions) {
       if (chunk.type === type) {
         pool.push(chunk);
       }
