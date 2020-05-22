@@ -3,7 +3,7 @@ import React from 'react';
 import { BoldToolBar } from '@slatable/bold';
 import { ItalicToolBar, ItalicFunction } from '@slatable/italic';
 import { TitleFunction } from '@slatable/title';
-import { SlateContainer, CreateNewProvider, Editor, CreateNewToolbar } from '@slatable/slate';
+import { SlateContainer, CreateNewProvider, Editor, CreateNewToolbar, TToolbarFormatProps } from '@slatable/slate';
 import { initContent } from './data';
 
 const container = new SlateContainer();
@@ -18,7 +18,12 @@ container.toolbar.register(BoldToolBar);
 container.toolbar.register(ItalicToolBar);
 
 titleFunc.allow(ItalicFunction);
-const formater = `${BoldToolBar.namespace}-${ItalicToolBar.namespace}`;
+const formater: TToolbarFormatProps = [
+  [
+    [BoldToolBar.namespace],
+    [ItalicToolBar.namespace]
+  ]
+];
 function App() {
   return (
     <Provider>

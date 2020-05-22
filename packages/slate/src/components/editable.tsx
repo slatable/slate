@@ -26,7 +26,6 @@ export class Editor extends React.Component<TEditorProps, TEditorStates> {
   }
 
   componentDidCatch(error: any) {
-    console.log('error', error)
     this.setState({
       hasError: true,
     });

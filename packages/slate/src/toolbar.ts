@@ -9,6 +9,8 @@ export interface TToolProps<T = any> {
   status: 'actived' | 'normal' | 'disabled',
 }
 
+export type TToolbarFormatProps = [string, any?][][];
+
 export class SlateTool {
   private readonly allowFunctions: Set<TSlateFunction> = new Set();
   public readonly container: SlateContainer;
@@ -120,37 +122,58 @@ export class SlateToolbar {
     }
   }
 
-  private buildTools(editor: ReactEditor, text: string, DividerComponent: JSX.Element) {
-    const _text = text.split('|');
-    return _text.map((value, index) => {
+  private buildTools(editor: ReactEditor, configs: TToolbarFormatProps, DividerComponent: JSX.Element) {
+    const pools: JSX.Element[] = [];
+    for (let i = 0; i < configs.length; i++) {
+      const group = configs[i];
       const items: React.FunctionComponentElement<TToolProps>[] = [];
-
-      value.split('-').forEach(val => {
-        const i = val.indexOf(':');
-        let key: string = val, data: string;
-        
-        if (i > -1) {
-          key = val.substring(0, i);
-          data = val.substring(i);
+      for (let j = 0; j < group.length; j++) {
+        const chunk = group[j];
+        const namespace = chunk[0];
+        const data = chunk[1];
+        if (this.stacks.has(namespace)) {
+          const object = this.stacks.get(namespace);
+          const CustomComponent = object.render.bind(object);
+          const status = object.getStatus(editor);
+          items.push(React.createElement(CustomComponent, { data, key: namespace, className: 'tool', status }));
         }
-
-        if (this.stacks.has(key)) {
-          const target = this.stacks.get(key);
-          const CustomComponent = target.render.bind(target);
-          const status = target.getStatus(editor);
-          items.push(React.createElement(CustomComponent, { data, key, className: 'tool', status }));
-        }
-      });
-
+      } 
       if (items.length) {
-        if (index < _text.length - 1) items.push(DividerComponent);
-        return React.createElement(React.Fragment, { key: index }, items);
+        if (i < configs.length - 1) items.push(DividerComponent);
+        pools.push(React.createElement(React.Fragment, { key: i }, items));
       }
+    }
+    return pools;
+    // const _text = text.split('|');
+    // return _text.map((value, index) => {
+    //   const items: React.FunctionComponentElement<TToolProps>[] = [];
+
+    //   value.split('-').forEach(val => {
+    //     const i = val.indexOf(':');
+    //     let key: string = val, data: string;
+        
+    //     if (i > -1) {
+    //       key = val.substring(0, i);
+    //       data = val.substring(i);
+    //     }
+
+    //     if (this.stacks.has(key)) {
+    //       const target = this.stacks.get(key);
+    //       const CustomComponent = target.render.bind(target);
+    //       const status = target.getStatus(editor);
+    //       items.push(React.createElement(CustomComponent, { data, key, className: 'tool', status }));
+    //     }
+    //   });
+
+    //   if (items.length) {
+    //     if (index < _text.length - 1) items.push(DividerComponent);
+    //     return React.createElement(React.Fragment, { key: index }, items);
+    //   }
       
-    }).filter(Boolean);
+    // }).filter(Boolean);
   }
 
-  public component(DividerComponent: JSX.Element): React.FunctionComponent<{ format: string }> {
+  public component(DividerComponent: JSX.Element): React.FunctionComponent<{ format: TToolbarFormatProps }> {
     return memo((props) => {
       const editor = useSlate();
       const items = this.buildTools(editor, props.format, DividerComponent);
