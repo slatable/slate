@@ -3,14 +3,15 @@ import 'antd/dist/antd.css';
 import React from 'react';
 
 import { BoldToolBar } from '@slatable/bold';
-import { ItalicToolBar, ItalicFunction } from '@slatable/italic';
+import { ItalicToolBar } from '@slatable/italic';
 import { TitleFunction } from '@slatable/title';
 import { QuoteToolBar } from '@slatable/quote';
+import { CodeToolBar } from '@slatable/code';
 
 import { SlateContainer, CreateNewProvider, Editor, CreateNewToolbar, TToolbarFormatProps } from '@slatable/slate';
 import { initContent } from './data';
 import { Divider } from 'antd';
-import { BoldOutlined, ItalicOutlined, NodeIndexOutlined } from '@ant-design/icons';
+import { BoldOutlined, ItalicOutlined, NodeIndexOutlined, CodeOutlined } from '@ant-design/icons';
 
 const container = new SlateContainer();
 const ToolBar = CreateNewToolbar(container, <Divider type="vertical" />);
@@ -22,19 +23,22 @@ container.on('content').subscribe(value => console.log('Editor Value:', value));
 BoldToolBar.icon = <BoldOutlined />;
 ItalicToolBar.icon = <ItalicOutlined />;
 QuoteToolBar.icon = <NodeIndexOutlined />;
+CodeToolBar.icon = <CodeOutlined />;
 
 container.toolbar.register(BoldToolBar);
 container.toolbar.register(ItalicToolBar);
 container.toolbar.register(QuoteToolBar);
+container.toolbar.register(CodeToolBar);
 
-titleFunc.allow(ItalicFunction);
+// titleFunc.allow(ItalicFunction);
 const formater: TToolbarFormatProps = [
   [
     [BoldToolBar.namespace],
     [ItalicToolBar.namespace]
   ],
   [
-    [QuoteToolBar.namespace]
+    [QuoteToolBar.namespace],
+    [CodeToolBar.namespace]
   ]
 ];
 function App() {

@@ -94,7 +94,7 @@
 }
 
 .editor-content .article strong{
-  color:#000;
+  font-weight: bolder;
 }
 
 .editor-title{
@@ -107,4 +107,11 @@
 .editor-content .article blockquote{
   border-left: 3px solid #eee;
   padding-left: 15px;
+  color:#999;
+}
+
+.editor-content .article code{
+  background-color: #eee;
+  padding: 2px 5px;
+  border-radius: 4px;
 }
