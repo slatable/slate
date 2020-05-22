@@ -1,2 +1,2 @@
 export * from './paragraph.function';
-export * from './paragraph.toolbar';
+export * from './title.toolbar';

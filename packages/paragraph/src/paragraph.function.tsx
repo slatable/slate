@@ -4,18 +4,18 @@ import { Subscription } from '@reactivex/rxjs';
 import { SlateFunction, TSlateFunction, SlateContainer, TLeafRenderProps, TElementRenderProps } from '@slatable/slate';
 
 export class ParagraphFunction extends SlateFunction implements TSlateFunction {
-  static readonly namespace = 'Paragraph';
+  static readonly namespace = 'H1';
   private readonly event$: Subscription;
   constructor(container: SlateContainer) {
-    super(container, 'leaf');
+    super(container, 'element');
     this.event$ = this.container.on('editor:' + ParagraphFunction.namespace).subscribe(() => {
       this.container.focus();
       this.setElement(ParagraphFunction.namespace);
     });
   }
 
-  public componentRenderNodes(props: TLeafRenderProps | TElementRenderProps, style: { [key: string]: any }, data: any) {
-    return <p></p>
+  public componentRenderNodes(props: TElementRenderProps, style: { [key: string]: any }, data: any) {
+    return <h1 id={props.id} style={style} {...props.attributes}>{props.children}</h1>
   }
 
   // public componentRenderStyle<T = any>(data?: T): {
