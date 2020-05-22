@@ -12,17 +12,26 @@
   /* border-bottom: 1px solid #eee; */
   padding: 0 40px;
 }
-
+.editor-header .tool{
+  display: block;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  line-height: 30px;
+}
 .editor-header .tool.actived {
   color:#ff0000;
+  cursor: pointer;
 }
 
 .editor-header .tool.normal {
   color:#333;
+  cursor: pointer;
 }
 
 .editor-header .tool.disabled {
-  color:#eee;
+  color:#ccc;
+  cursor: not-allowed;
 }
 
 .editor-header:after{
@@ -79,4 +88,15 @@
 .editor-content .article strong{
   color:#000;
   padding: 0 3px;
+}
+
+.editor-title{
+  border-bottom: 1px solid #eee;
+  padding-bottom: 20px;
+  margin:0;
+  margin-bottom: 20px;
+}
+
+.editor-content .article p{
+  text-indent: 2em;
 }

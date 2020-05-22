@@ -10,7 +10,7 @@ export interface TToolProps<T = any> {
 }
 
 export class SlateTool {
-  private readonly allowTypes: Set<TSlateFunction> = new Set();
+  private readonly allowFunctions: Set<TSlateFunction> = new Set();
   public readonly container: SlateContainer;
   constructor(container: SlateContainer) {
     this.container = container;
@@ -19,14 +19,14 @@ export class SlateTool {
   public register<T extends TSlateFunction>(...classModules: { new(container: SlateContainer): T, namespace: string }[]) {
     for (let i = 0; i < classModules.length; i++) {
       const func = this.container.register(classModules[i]);
-      this.allowTypes.add(func);
+      this.allowFunctions.add(func);
     }
   }
 
   public unRegister<T extends TSlateFunction>(...classModules: { new(container: SlateContainer): T, namespace: string }[]) {
     for (let i = 0; i < classModules.length; i++) {
       const func = this.container.unRegister(classModules[i]);
-      this.allowTypes.delete(func);
+      this.allowFunctions.delete(func);
     }
   }
 
@@ -43,7 +43,7 @@ export class SlateTool {
 
   private matchType(type: 'element' | 'leaf') {
     const pool: TSlateFunction[] = [];
-    for (const chunk of this.allowTypes) {
+    for (const chunk of this.allowFunctions) {
       if (chunk.type === type) {
         pool.push(chunk);
       }
@@ -51,7 +51,22 @@ export class SlateTool {
     return pool
   }
 
-  getStatus(editor: ReactEditor): 'actived' | 'normal' | 'disabled' {
+  public getStatus(editor: ReactEditor): 'actived' | 'normal' | 'disabled' {
+    const stacks = this.container.functionStacks;
+    if (stacks.size) {
+      for (const stack of stacks) {
+        const namespace = stack;
+        const deps = this.container.dependencies.has(namespace) ? this.container.dependencies.get(namespace) : null;
+        if (deps instanceof Set) {
+          const i = this.allowFunctions.size;
+          let j = 0
+          for (const func of this.allowFunctions) {
+            if (!deps.has((func.constructor as any).namespace)) j++;
+          }
+          if (j === i) return 'disabled';
+        }
+      }
+    }
     const elements = this.matchType('element');
     if (elements.length) {
       for (let i = 0; i < elements.length; i++) {
@@ -93,7 +108,7 @@ export class SlateToolbar {
     if (this.stacks.has(classModule.namespace)) return this;
     const tool = new classModule(this.container);
     this.stacks.set(classModule.namespace, tool);
-    return this;
+    return tool;
   }
 
   public unRegister(namespace: string) {
@@ -101,8 +116,8 @@ export class SlateToolbar {
       const tool = this.stacks.get(namespace);
       if (tool.componentTerminate) tool.componentTerminate();
       this.stacks.delete(namespace);
+      return tool;
     }
-    return this;
   }
 
   private buildTools(editor: ReactEditor, text: string, DividerComponent: JSX.Element) {

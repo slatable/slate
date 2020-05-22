@@ -8,9 +8,17 @@ import { Transforms } from 'slate';
 export class SlateFunction {
   public readonly container: SlateContainer;
   public readonly type: 'element' | 'leaf' | 'attr';
-  constructor(container: SlateContainer, type: 'element' | 'leaf' | 'attr') {
+  constructor(container: SlateContainer, type: SlateFunction['type']) {
     this.container = container;
     this.type = type;
+  }
+
+  public allow<T extends TSlateFunction>(...classModules: ({ new (container: SlateContainer): T, namespace: string } | string)[]) {
+    const names = classModules.map(classModule => {
+      if (typeof classModule === 'string') return classModule;
+      return classModule.namespace;
+    });
+    this.container.addDependencies((this.constructor as { new (container: SlateContainer): T, namespace: string }).namespace, ...names);
   }
 
   public setLeaf(namespace: string, data?: any) {
