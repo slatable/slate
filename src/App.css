@@ -2,7 +2,7 @@
   height: 40px;
   background-color: #fff;
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
   align-items: center;
   width: 100%;
   position: fixed;
@@ -59,10 +59,10 @@
 }
 
 .editor-content .article {
-  line-height: 1.5;
+  line-height: 1.75;
   color:#555;
   font-size:14px;
-  font-family: Microsoft YaHei;
+  font-family: PingFangSC-Regular, sans-serif;
 }
 
 .editor-content .article p{
@@ -94,7 +94,7 @@
 }
 
 .editor-content .article strong{
-  color:#000;
+  font-weight: bolder;
 }
 
 .editor-title{
@@ -107,4 +107,18 @@
 .editor-content .article blockquote{
   border-left: 3px solid #eee;
   padding-left: 15px;
+  color:#999;
+}
+
+.editor-content .article code{
+  background-color: #eee;
+  padding: 2px 3px;
+  border-radius: 4px;
+}
+
+.editor-content .article hr{
+  height: 1px;
+  width: 100%;
+  background-color: #ddd;
+  border:0;
 }
