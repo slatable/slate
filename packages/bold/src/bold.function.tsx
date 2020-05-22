@@ -19,4 +19,8 @@ export class BoldFunction extends SlateFunction implements TSlateFunction {
   public componentTerminate(): void {
     this.event$.unsubscribe();
   }
+
+  public componentDeserialize() {
+    return { [BoldFunction.namespace]: true };
+  }
 }

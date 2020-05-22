@@ -19,4 +19,8 @@ export class ItalicFunction extends SlateFunction implements TSlateFunction {
   public componentTerminate(): void {
     this.event$.unsubscribe();
   }
+  
+  public componentDeserialize() {
+    return { [ItalicFunction.namespace]: true };
+  }
 }
