@@ -1,19 +1,24 @@
 import './App.css';
+import 'antd/dist/antd.css';
 import React from 'react';
 import { BoldToolBar } from '@slatable/bold';
 import { ItalicToolBar, ItalicFunction } from '@slatable/italic';
 import { TitleFunction } from '@slatable/title';
 import { SlateContainer, CreateNewProvider, Editor, CreateNewToolbar, TToolbarFormatProps } from '@slatable/slate';
 import { initContent } from './data';
+import { Divider } from 'antd';
+import { BoldOutlined, ItalicOutlined } from '@ant-design/icons';
 
 const container = new SlateContainer();
-const ToolBar = CreateNewToolbar(container);
+const ToolBar = CreateNewToolbar(container, <Divider type="vertical" />);
 const [state, titleFunc] = TitleFunction.useTitle(container, initContent, '朱自清 - 荷塘月色')
 const Provider = CreateNewProvider(container, state);
 
 container.on('content').subscribe(value => console.log('Editor Value:', value));
 
-// BoldToolBar.icon = <div>贾村</div>
+BoldToolBar.icon = <BoldOutlined />;
+ItalicToolBar.icon = <ItalicOutlined />;
+
 container.toolbar.register(BoldToolBar);
 container.toolbar.register(ItalicToolBar);
 

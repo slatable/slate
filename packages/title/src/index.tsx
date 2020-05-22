@@ -41,12 +41,12 @@ export class TitleFunction extends SlateFunction implements TSlateFunction {
     const insertBreak = editor.insertBreak;
     editor.deleteBackward = (unit: "character" | "word" | "line" | "block") => this.onDelete(() => deleteBackward(unit));
     editor.deleteForward = (unit: "character" | "word" | "line" | "block") => this.onDelete(() => deleteForward(unit));
-    editor.deleteFragment = () => this.onDelete(() => deleteFragment());
+    editor.deleteFragment = () => this.onDelete(() => deleteFragment(), true);
     editor.insertBreak = () => this.onInsertBreak(() => insertBreak());
     return editor;
   }
 
-  private onDelete(action: () => void) {
+  private onDelete(action: () => void, isFragment?: boolean) {
     const [active, data] = this.container.useRangeElement(TitleFunction.namespace);
     if (!active) {
       if (this.container.editor.children.length > 2) return action();
@@ -54,6 +54,21 @@ export class TitleFunction extends SlateFunction implements TSlateFunction {
       if (chunk.children.length > 1) return action();
       if ((chunk.children[0] as TLeafNode).text.length) return action();
       return;
+    }
+    if (isFragment && (
+      this.container.editor.selection.focus.path[0] > 0 || 
+      this.container.editor.selection.anchor.path[0] > 0)
+    ) {
+      const focus = this.container.editor.selection.focus.path[0] > 0 
+        ? this.container.editor.selection.focus
+        : this.container.editor.selection.anchor;
+      Transforms.select(this.container.editor, {
+        anchor: {
+          offset: 0,
+          path: [1, 0],
+        },
+        focus,
+      });
     }
     if (data.children.length > 1) return action();
     if ((data.children[0] as TLeafNode).text.length) return action();
