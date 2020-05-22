@@ -29,8 +29,8 @@ export class SlateFunction {
   public setElement(namespace: string) {
     const editor = this.container.editor;
     if (!editor) return this;
-    const [active, props] = this.container.useRangeElement(namespace);
-    if (!active) return this;
+    if (!editor.selection || !editor.selection.anchor) return this;
+    const props = editor.children[editor.selection.anchor.path[0]] as TElementNode;
     const LIST_TYPES = ['NumberedList', 'BulletedList']
     const isListActive = LIST_TYPES.indexOf(props.type) > -1
     const isList = LIST_TYPES.indexOf(namespace) > -1

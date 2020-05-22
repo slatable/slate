@@ -14,10 +14,10 @@
 }
 .editor-header .tool{
   display: block;
-  width: 30px;
-  height: 30px;
+  width: 24px;
+  height: 24px;
   text-align: center;
-  line-height: 30px;
+  line-height: 24px;
   font-size: 16px;
   margin:0 5px;
 }
@@ -102,4 +102,9 @@
   padding-bottom: 20px;
   margin:0;
   margin-bottom: 20px;
+}
+
+.editor-content .article blockquote{
+  border-left: 3px solid #eee;
+  padding-left: 15px;
 }

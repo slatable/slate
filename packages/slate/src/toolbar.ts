@@ -144,33 +144,6 @@ export class SlateToolbar {
       }
     }
     return pools;
-    // const _text = text.split('|');
-    // return _text.map((value, index) => {
-    //   const items: React.FunctionComponentElement<TToolProps>[] = [];
-
-    //   value.split('-').forEach(val => {
-    //     const i = val.indexOf(':');
-    //     let key: string = val, data: string;
-        
-    //     if (i > -1) {
-    //       key = val.substring(0, i);
-    //       data = val.substring(i);
-    //     }
-
-    //     if (this.stacks.has(key)) {
-    //       const target = this.stacks.get(key);
-    //       const CustomComponent = target.render.bind(target);
-    //       const status = target.getStatus(editor);
-    //       items.push(React.createElement(CustomComponent, { data, key, className: 'tool', status }));
-    //     }
-    //   });
-
-    //   if (items.length) {
-    //     if (index < _text.length - 1) items.push(DividerComponent);
-    //     return React.createElement(React.Fragment, { key: index }, items);
-    //   }
-      
-    // }).filter(Boolean);
   }
 
   public component(DividerComponent: JSX.Element): React.FunctionComponent<{ format: TToolbarFormatProps }> {
