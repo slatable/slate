@@ -8,11 +8,12 @@ import { ParagraphFunction, TitleToolbar } from '@slatable/paragraph';
 import { TitleFunction } from '@slatable/title';
 import { QuoteToolBar } from '@slatable/quote';
 import { CodeToolBar } from '@slatable/code';
+import { HrToolBar } from '@slatable/hr'
 
 import { SlateContainer, CreateNewProvider, Editor, CreateNewToolbar, TToolbarFormatProps } from '@slatable/slate';
 import { initContent } from './data';
-import { Divider } from 'antd';
-import { BoldOutlined, ItalicOutlined, NodeIndexOutlined, CodeOutlined } from '@ant-design/icons';
+import { Divider, Tooltip } from 'antd';
+import { BoldOutlined, ItalicOutlined, NodeIndexOutlined, CodeOutlined, MinusOutlined } from '@ant-design/icons';
 
 const container = new SlateContainer();
 const ToolBar = CreateNewToolbar(container, <Divider type="vertical" />);
@@ -21,18 +22,20 @@ const Provider = CreateNewProvider(container, state);
 
 container.on('content').subscribe(value => console.log('Editor Value:', value));
 
-BoldToolBar.icon = <BoldOutlined />;
-ItalicToolBar.icon = <ItalicOutlined />;
-QuoteToolBar.icon = <NodeIndexOutlined />;
-CodeToolBar.icon = <CodeOutlined />;
+BoldToolBar.icon = <Tooltip title="加粗"><BoldOutlined /></Tooltip>;
+ItalicToolBar.icon = <Tooltip title="斜体"><ItalicOutlined /></Tooltip>;
+QuoteToolBar.icon = <Tooltip title="引用"><NodeIndexOutlined /></Tooltip>;
+CodeToolBar.icon = <Tooltip title="代码"><CodeOutlined /></Tooltip>;
+HrToolBar.icon = <Tooltip title="分割线"><MinusOutlined /></Tooltip>;
 
 container.toolbar.register(BoldToolBar);
 container.toolbar.register(ItalicToolBar);
 container.toolbar.register(TitleToolbar)
 container.toolbar.register(QuoteToolBar);
 container.toolbar.register(CodeToolBar);
+container.toolbar.register(HrToolBar);
 
-// titleFunc.allow(ItalicFunction);
+titleFunc.allow();
 const formater: TToolbarFormatProps = [
   [
     [BoldToolBar.namespace],
@@ -40,7 +43,8 @@ const formater: TToolbarFormatProps = [
   ],
   [
     [QuoteToolBar.namespace],
-    [CodeToolBar.namespace]
+    [CodeToolBar.namespace],
+    [HrToolBar.namespace]
   ]
 ];
 function App() {
