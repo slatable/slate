@@ -3,7 +3,8 @@ import 'antd/dist/antd.css';
 import React from 'react';
 
 import { BoldToolBar } from '@slatable/bold';
-import { ItalicToolBar } from '@slatable/italic';
+import { ItalicToolBar, ItalicFunction } from '@slatable/italic';
+import { ParagraphFunction, TitleToolbar } from '@slatable/paragraph';
 import { TitleFunction } from '@slatable/title';
 import { QuoteToolBar } from '@slatable/quote';
 import { CodeToolBar } from '@slatable/code';
@@ -27,6 +28,7 @@ CodeToolBar.icon = <CodeOutlined />;
 
 container.toolbar.register(BoldToolBar);
 container.toolbar.register(ItalicToolBar);
+container.toolbar.register(TitleToolbar)
 container.toolbar.register(QuoteToolBar);
 container.toolbar.register(CodeToolBar);
 
@@ -44,7 +46,9 @@ const formater: TToolbarFormatProps = [
 function App() {
   return (
     <Provider>
-      <div className="editor-header"><ToolBar format={formater} /></div>
+      <div className="editor-header">
+        <ToolBar format={formater} />
+      </div>
       <div className="editor-content">
         <Editor spellCheck autoFocus container={container} placeholder="请输入文章内容..." className="article" />
       </div>

@@ -11,6 +11,7 @@ export type TElementNode = Node & {
 }
 
 export interface TElementRenderProps {
+  id?:string,
   attributes: { [key: string]: string },
   children: React.ReactElement,
   element: TElementNode,
