@@ -1,75 +1,73 @@
 import React, { useCallback } from 'react';
-import { Subscription } from '@reactivex/rxjs';
-import { SlateContainer, TSlateTool, SlateTool, TToolProps } from '@slatable/slate';
+import { Editor } from 'slate';
+import { SlateContainer, TSlateTool, SlateTool, TToolProps, TElementNode } from '@slatable/slate';
 import { ParagraphFunction } from './paragraph.function';
-import { H1Function } from './h1'
-import { H2Function } from './h2'
-import { H3Function } from './h3'
-import { H4Function } from './h4'
-import { H5Function } from './h5'
-import { H6Function } from './h6'
+import { H1Function } from './h1';
+import { H2Function } from './h2';
+import { H3Function } from './h3';
+import { H4Function } from './h4';
+import { H5Function } from './h5';
+import { H6Function } from './h6';
+import classnames from 'classnames'
 
-const fns = [ParagraphFunction, H1Function, H2Function, H3Function, H4Function, H5Function, H6Function]
-
-const TitleText = [
-  '普通文本',
-  '一级标题',
-  '二级标题',
-  '三级标题',
-  '四级标题',
-  '五级标题',
-  '六级标题'
+const namspaces = [
+  ParagraphFunction.namespace, 
+  H1Function.namespace, 
+  H2Function.namespace, 
+  H3Function.namespace, 
+  H4Function.namespace, 
+  H5Function.namespace, 
+  H6Function.namespace
 ];
+
+export interface TParagraphToolbarComponentProps {
+  items: number[],
+  click: (idx: number) => void,
+  selectedIndex: number,
+  status: 'actived' | 'normal' | 'disabled',
+}
+export type TParagraphToolbarComponent = React.FunctionComponent<TParagraphToolbarComponentProps>;
 
 export class ParagraphToolbar extends SlateTool implements TSlateTool {
   static readonly namespace = 'ParagraphToolbar';
-  static Compo: React.FunctionComponent<{
-    onClick: Function,
-    titleText: Array<String>
-  }>;
-  static icon: JSX.Element;
-  private readonly event$: Subscription;
+  static component: TParagraphToolbarComponent;
   constructor(container: SlateContainer) {
     super(container);
-    this.register(H1Function)
-    this.register(H2Function)
-    this.register(H3Function)
-    this.register(H4Function)
-    this.register(H5Function)
-    this.register(H6Function)
-    this.register(ParagraphFunction)
+    this.register(H1Function);
+    this.register(H2Function);
+    this.register(H3Function);
+    this.register(H4Function);
+    this.register(H5Function);
+    this.register(H6Function);
+    this.register(ParagraphFunction);
   }
 
-  render(props: TToolProps): JSX.Element {
-    if (ParagraphToolbar.Compo) {
-      return this.component_render()
-    }
-    const onClick = useCallback((namespace: string) => {
+  render(props: TToolProps<TParagraphToolbarComponentProps['items']>): JSX.Element {
+    let index = 0;
+    const Component = ParagraphToolbar.component;
+    const click = useCallback((which: number) => {
       if (props.status !== 'disabled') {
-        this.container.cast('editor:' + namespace)
+        this.container.focus();
+        this.container.cast('editor:' + namspaces[which]);
       }
-    }, [])
-    return <div>
-      {
-        TitleText.map((item: string, index: number) => {
-          return <span style={{
-            cursor: 'pointer'
-          }} onMouseDown={() => {
-            onClick(fns[index].namespace)
-          }}>{ParagraphToolbar.icon || item}</span>
-        })
-      }
-    </div>
-  }
-
-  component_render() {
-    let Compo = ParagraphToolbar.Compo
-    return <Compo titleText={TitleText} onClick={(index: number) => {
-      this.container.cast('editor:' + fns[index].namespace)
-    }} />
+    }, []);
+    const [match] = Editor.nodes(this.container.editor, {
+      match: (node: any) => namspaces.indexOf(node.type) > -1
+    });
+    if (match) index = namspaces.indexOf(match[0].type as string);
+    if (index === -1) index = 0;
+    return !Component ? null : <div onMouseDown={e => e.preventDefault()} className={classnames('paragraph', props.status)}>
+      <Component items={props.data} click={click} selectedIndex={index} status={props.status} />
+    </div>;
   }
 
   componentTerminate() {
     this.unRegister(ParagraphFunction);
+    this.unRegister(H6Function);
+    this.unRegister(H5Function);
+    this.unRegister(H4Function);
+    this.unRegister(H3Function);
+    this.unRegister(H2Function);
+    this.unRegister(H1Function);
   }
 }

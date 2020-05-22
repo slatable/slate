@@ -122,3 +122,8 @@
   background-color: #ddd;
   border:0;
 }
+
+.paragraph.disabled {
+  cursor: not-allowed;
+  color: #ccc;
+}

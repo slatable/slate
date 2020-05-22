@@ -6,7 +6,8 @@
     "build": "lerna run build",
     "start": "node scripts/start.js",
     "built": "node scripts/build.js",
-    "test": "node scripts/test.js"
+    "test": "node scripts/test.js",
+    "link": "node scripts/symlink.js"
   },
   "devDependencies": {
     "@babel/core": "7.9.0",
