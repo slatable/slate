@@ -22,11 +22,11 @@ const Provider = CreateNewProvider(container, state);
 
 container.on('content').subscribe(value => console.log('Editor Value:', value));
 
-BoldToolBar.icon = <Tooltip title="加粗"><BoldOutlined /></Tooltip>;
-ItalicToolBar.icon = <Tooltip title="斜体"><ItalicOutlined /></Tooltip>;
-QuoteToolBar.icon = <Tooltip title="引用"><NodeIndexOutlined /></Tooltip>;
-CodeToolBar.icon = <Tooltip title="代码"><CodeOutlined /></Tooltip>;
-HrToolBar.icon = <Tooltip title="分割线"><MinusOutlined /></Tooltip>;
+BoldToolBar.icon = <Tooltip title="加粗" placement="bottom"><BoldOutlined /></Tooltip>;
+ItalicToolBar.icon = <Tooltip title="斜体" placement="bottom"><ItalicOutlined /></Tooltip>;
+QuoteToolBar.icon = <Tooltip title="引用" placement="bottom"><NodeIndexOutlined /></Tooltip>;
+CodeToolBar.icon = <Tooltip title="代码" placement="bottom"><CodeOutlined /></Tooltip>;
+HrToolBar.icon = <Tooltip title="分割线" placement="bottom"><MinusOutlined /></Tooltip>;
 
 container.toolbar.register(BoldToolBar);
 container.toolbar.register(ItalicToolBar);

@@ -126,7 +126,7 @@ export class SlateToolbar {
     const pools: JSX.Element[] = [];
     for (let i = 0; i < configs.length; i++) {
       const group = configs[i];
-      const items: React.FunctionComponentElement<TToolProps>[] = [];
+      const items: React.ReactElement<TToolProps>[] = [];
       for (let j = 0; j < group.length; j++) {
         const chunk = group[j];
         const namespace = chunk[0];
@@ -135,12 +135,15 @@ export class SlateToolbar {
           const object = this.stacks.get(namespace);
           const CustomComponent = object.render.bind(object);
           const status = object.getStatus(editor);
-          items.push(React.createElement(CustomComponent, { data, key: namespace, className: 'tool', status }));
+          items.push(<CustomComponent data={data} key={namespace} className="tool" status={status} />);
         }
       } 
       if (items.length) {
-        if (i < configs.length - 1) items.push(DividerComponent);
-        pools.push(React.createElement(React.Fragment, { key: i }, items));
+        if (i < configs.length - 1) {
+          const CustomDividerComponent: React.FunctionComponent<TToolProps> = () => <React.Fragment key="aa">{DividerComponent}</React.Fragment>;
+          items.push(<CustomDividerComponent className="divider" status="normal" key={SlateContainer.createNewID()} />);
+        }
+        pools.push(<React.Fragment key={i}>{items}</React.Fragment>);
       }
     }
     return pools;
