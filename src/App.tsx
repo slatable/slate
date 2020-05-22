@@ -95,14 +95,13 @@ const formater: TToolbarFormatProps = [
     [QuoteToolBar.namespace],
     [CodeToolBar.namespace],
     [HrToolBar.namespace],
-    [ParagraphToolbar.namespace, [1, 3, 5, 6]]
+    [ParagraphToolbar.namespace, [1, 3, 5, 6]],
     [BoldToolBar.namespace],
     [ItalicToolBar.namespace],
     [UnderlineToolBar.namespace],
     [ColorToolBar.namespace],
     [BackgroundColorToolBar.namespace],
     [ImgToolBar.namespace],
-    [ParagraphToolbar.namespace],
     [AlignToolBar.namespace]
   ]
 ];

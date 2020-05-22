@@ -16,7 +16,7 @@ export class BoldToolBar extends SlateTool implements TSlateTool {
       if (props.status !== 'disabled') {
         this.container.cast('editor:' + BoldFunction.namespace);
       }
-    }, []);
+    }, [props.status]);
     return <span onMouseDown={onClick} className={classnames(props.status, props.className)}>{BoldToolBar.icon || 'B'}</span>;
   }
 

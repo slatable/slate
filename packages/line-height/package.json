@@ -1,7 +1,7 @@
 {
-  "name": "@slatable/background-color",
+  "name": "@slatable/line-height",
   "version": "1.0.0",
-  "description": "slatable background-color",
+  "description": "slatable line-height",
   "author": "",
   "homepage": "https://github.com/slatable/core",
   "license": "MIT",
@@ -22,7 +22,6 @@
   },
   "dependencies": {
     "@slatable/slate": "^1.0.0",
-    "react-color": "^2.18.1",
     "slate-react": "^0.58.1"
   },
   "peerDependencies": {
