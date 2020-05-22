@@ -103,3 +103,8 @@
   margin:0;
   margin-bottom: 20px;
 }
+
+.editor-content .article blockquote{
+  border-left: 3px solid #eee;
+  padding-left: 15px;
+}

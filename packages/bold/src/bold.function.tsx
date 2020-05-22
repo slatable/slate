@@ -1,5 +1,5 @@
 import React from 'react';
-import { SlateFunction, TSlateFunction, SlateContainer, TLeafRenderProps } from '@slatable/slate';
+import { SlateFunction, TSlateFunction, SlateContainer, TLeafRenderProps, TLeafNode } from '@slatable/slate';
 import { Subscription } from '@reactivex/rxjs';
   
 export class BoldFunction extends SlateFunction implements TSlateFunction {
@@ -18,6 +18,10 @@ export class BoldFunction extends SlateFunction implements TSlateFunction {
 
   public componentTerminate(): void {
     this.event$.unsubscribe();
+  }
+
+  public useRangeMardHook<T extends TLeafNode>(value: T): boolean {
+    return !!value[BoldFunction.namespace];
   }
 
   public componentDeserialize() {
