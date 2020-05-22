@@ -4,7 +4,7 @@ import React from 'react';
 
 import { BoldToolBar } from '@slatable/bold';
 import { ItalicToolBar, ItalicFunction } from '@slatable/italic';
-import { ParagraphFunction, TitleToolbar } from '@slatable/paragraph'
+import { ParagraphToolbar } from '@slatable/paragraph'
 import { TitleFunction } from '@slatable/title';
 import { QuoteToolBar } from '@slatable/quote';
 
@@ -26,7 +26,7 @@ QuoteToolBar.icon = <NodeIndexOutlined />;
 
 container.toolbar.register(BoldToolBar);
 container.toolbar.register(ItalicToolBar);
-container.toolbar.register(TitleToolbar)
+container.toolbar.register(ParagraphToolbar)
 container.toolbar.register(QuoteToolBar);
 
 titleFunc.allow(ItalicFunction);
@@ -36,7 +36,8 @@ const formater: TToolbarFormatProps = [
     [ItalicToolBar.namespace]
   ],
   [
-    [QuoteToolBar.namespace]
+    [QuoteToolBar.namespace],
+    [ParagraphToolbar.namespace]
   ]
 ];
 function App() {
