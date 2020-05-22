@@ -25,7 +25,9 @@ container.toolbar.register(BoldToolBar);
 function App() {
   return (
     <Provider>
-      <div className="editor-header"><ToolBar format={BoldToolBar.namespace} /></div>
+      <div className="editor-header">
+        <ToolBar format={BoldToolBar.namespace} />
+      </div>
       <div className="editor-content">
         <Editor spellCheck autoFocus container={container} placeholder="请输入文章内容..." className="article" />
       </div>
