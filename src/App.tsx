@@ -14,6 +14,7 @@ import { SlateContainer, CreateNewProvider, Editor, CreateNewToolbar, TToolbarFo
 import { UnderlineToolBar } from '@slatable/underline';
 import { ColorToolBar } from '@slatable/color';
 import { BackgroundColorToolBar } from '@slatable/background-color';
+import { AlignToolBar } from '@slatable/align';
 import { initContent } from './data';
 import { Divider, Tooltip } from 'antd';
 import { BoldOutlined, ItalicOutlined, NodeIndexOutlined, CodeOutlined, MinusOutlined } from '@ant-design/icons';
@@ -41,6 +42,7 @@ container.toolbar.register(UnderlineToolBar);
 container.toolbar.register(ColorToolBar)
 container.toolbar.register(BackgroundColorToolBar)
 container.toolbar.register(ImgToolBar)
+container.toolbar.register(AlignToolBar)
 
 titleFunc.allow();
 const formater: TToolbarFormatProps = [
@@ -54,7 +56,8 @@ const formater: TToolbarFormatProps = [
     [ColorToolBar.namespace],
     [BackgroundColorToolBar.namespace],
     [ImgToolBar.namespace],
-    [ParagraphToolbar.namespace]
+    [ParagraphToolbar.namespace],
+    [AlignToolBar.namespace]
   ]
 ];
 function App() {

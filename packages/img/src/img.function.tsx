@@ -35,7 +35,7 @@ export class ImgFunction extends SlateFunction implements TSlateFunction {
       {
         type: 'P',
         children: [
-          { text: '' }
+          { text: 'cdsvdfsvfdvdfvfd' }
         ],
         style: [],
         id: SlateContainer.createNewID(),
