@@ -14,10 +14,10 @@
 }
 .editor-header .tool{
   display: block;
-  width: 30px;
-  height: 30px;
+  width: 24px;
+  height: 24px;
   text-align: center;
-  line-height: 30px;
+  line-height: 24px;
   font-size: 16px;
   margin:0 5px;
 }
