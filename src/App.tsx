@@ -3,18 +3,17 @@ import 'antd/dist/antd.css';
 import React from 'react';
 
 import { BoldToolBar } from '@slatable/bold';
-import { ItalicToolBar, ItalicFunction } from '@slatable/italic';
-<<<<<<< HEAD
+import { ItalicToolBar } from '@slatable/italic';
 import { ParagraphToolbar } from '@slatable/paragraph'
-=======
-import { ParagraphFunction, TitleToolbar } from '@slatable/paragraph';
->>>>>>> 75156cb37cc8bf54eda25b6d347fce2bb928ab09
 import { TitleFunction } from '@slatable/title';
 import { QuoteToolBar } from '@slatable/quote';
 import { CodeToolBar } from '@slatable/code';
-import { HrToolBar } from '@slatable/hr'
-
+import { HrToolBar } from '@slatable/hr';
+import { ImgToolBar } from '@slatable/img';
 import { SlateContainer, CreateNewProvider, Editor, CreateNewToolbar, TToolbarFormatProps } from '@slatable/slate';
+import { UnderlineToolBar } from '@slatable/underline';
+import { ColorToolBar } from '@slatable/color';
+import { BackgroundColorToolBar } from '@slatable/background-color';
 import { initContent } from './data';
 import { Divider, Tooltip } from 'antd';
 import { BoldOutlined, ItalicOutlined, NodeIndexOutlined, CodeOutlined, MinusOutlined } from '@ant-design/icons';
@@ -38,15 +37,23 @@ container.toolbar.register(ParagraphToolbar)
 container.toolbar.register(QuoteToolBar);
 container.toolbar.register(CodeToolBar);
 container.toolbar.register(HrToolBar);
+container.toolbar.register(UnderlineToolBar);
+container.toolbar.register(ColorToolBar)
+container.toolbar.register(BackgroundColorToolBar)
+container.toolbar.register(ImgToolBar)
 
 titleFunc.allow();
 const formater: TToolbarFormatProps = [
   [
-    [BoldToolBar.namespace],
-    [ItalicToolBar.namespace]
-  ],
-  [
     [QuoteToolBar.namespace],
+    [CodeToolBar.namespace],
+    [HrToolBar.namespace],
+    [BoldToolBar.namespace],
+    [ItalicToolBar.namespace],
+    [UnderlineToolBar.namespace],
+    [ColorToolBar.namespace],
+    [BackgroundColorToolBar.namespace],
+    [ImgToolBar.namespace],
     [ParagraphToolbar.namespace]
   ]
 ];
