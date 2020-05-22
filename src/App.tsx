@@ -4,14 +4,19 @@ import React, { memo } from 'react';
 
 import { BoldToolBar } from '@slatable/bold';
 import { ItalicToolBar } from '@slatable/italic';
-import { ParagraphToolbar } from '@slatable/paragraph';
+import { ParagraphToolbar } from '@slatable/paragraph'
 import { TitleFunction } from '@slatable/title';
 import { QuoteToolBar } from '@slatable/quote';
 import { CodeToolBar } from '@slatable/code';
 import { HrToolBar } from '@slatable/hr';
 import classnames from 'classnames';
 
+import { ImgToolBar } from '@slatable/img';
 import { SlateContainer, CreateNewProvider, Editor, CreateNewToolbar, TToolbarFormatProps } from '@slatable/slate';
+import { UnderlineToolBar } from '@slatable/underline';
+import { ColorToolBar } from '@slatable/color';
+import { BackgroundColorToolBar } from '@slatable/background-color';
+import { AlignToolBar } from '@slatable/align';
 import { initContent } from './data';
 import { Divider, Tooltip, Menu, Dropdown } from 'antd';
 import { BoldOutlined, ItalicOutlined, NodeIndexOutlined, CodeOutlined, MinusOutlined, CaretDownOutlined, CheckOutlined } from '@ant-design/icons';
@@ -78,18 +83,27 @@ container.toolbar.register(ParagraphToolbar)
 container.toolbar.register(QuoteToolBar);
 container.toolbar.register(CodeToolBar);
 container.toolbar.register(HrToolBar);
+container.toolbar.register(UnderlineToolBar);
+container.toolbar.register(ColorToolBar)
+container.toolbar.register(BackgroundColorToolBar)
+container.toolbar.register(ImgToolBar)
+container.toolbar.register(AlignToolBar)
 
 titleFunc.allow();
 const formater: TToolbarFormatProps = [
-  [
-    [BoldToolBar.namespace],
-    [ItalicToolBar.namespace]
-  ],
   [
     [QuoteToolBar.namespace],
     [CodeToolBar.namespace],
     [HrToolBar.namespace],
     [ParagraphToolbar.namespace, [1, 3, 5, 6]]
+    [BoldToolBar.namespace],
+    [ItalicToolBar.namespace],
+    [UnderlineToolBar.namespace],
+    [ColorToolBar.namespace],
+    [BackgroundColorToolBar.namespace],
+    [ImgToolBar.namespace],
+    [ParagraphToolbar.namespace],
+    [AlignToolBar.namespace]
   ]
 ];
 

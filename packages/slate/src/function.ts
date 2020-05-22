@@ -22,6 +22,7 @@ export class SlateFunction {
   }
 
   public setLeaf(namespace: string, data?: any) {
+    console.log(namespace, data, 'set')
     this.container.toggleMark(namespace, data);
     return this;
   }

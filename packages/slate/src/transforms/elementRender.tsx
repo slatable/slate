@@ -8,6 +8,7 @@ export type TElementNode = Node & {
   style?: [string, any][],
   type: string,
   children: (TLeafNode | TElementNode)[],
+  src?: string
 }
 
 export interface TElementRenderProps {

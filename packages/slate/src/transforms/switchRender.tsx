@@ -8,6 +8,7 @@ export interface SwitchRenderProps extends TLeafRenderProps,TElementRenderProps 
 export function SwtichRender(container: SlateContainer): React.FunctionComponent<SwitchRenderProps> {
   const ElementRenderer = ElementRender(container);
   return memo(props => {
+    console.log(props, 'propssffd')
     if (props.element) return <ElementRenderer {...props} />;
     let children = props.children;
     if (props.leaf) {
