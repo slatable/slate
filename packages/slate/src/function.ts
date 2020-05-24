@@ -70,8 +70,11 @@ export class SlateFunction {
     if (!editor) return;
     if (!editor.selection || !editor.selection.anchor) return this;
     const selection = editor.selection;
-    const min = editor.selection.anchor.path[0];
-    const max = editor.selection.focus.path[0];
+    let min = editor.selection.anchor.path[0];
+    let max = editor.selection.focus.path[0];
+    if(min > max) {
+      [min, max] = [max, min]
+    }
     for(let i = min; i <= max; i ++) {
       const props = editor.children[i] as TElementNode;
       const pools: [string, any][] = (props.style || []).slice(0);

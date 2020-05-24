@@ -14,18 +14,19 @@ export class BackgroundColorToolBar extends SlateTool implements TSlateTool {
   }
 
   render(props: TToolProps) {
+    const [, color] = this.container.useRangeLeaf(BackgroundColorFunction.namespace)
     const onChangeComplete = (color: ColorResult) => {
       this.container.cast('editor:' + BackgroundColorFunction.namespace, { color: color.hex });
     }
 
     if(props.status !== 'disabled') {
       return <div onMouseDown={e => e.preventDefault()}>
-        <Popover overlayClassName='cus-popover' content={<CompactPicker onChangeComplete={onChangeComplete} />} title={null}>
-          <span onMouseDown={e => e.preventDefault()} className={classnames(props.status, props.className)}>{BackgroundColorToolBar.icon || 'A'}</span>
+        <Popover overlayClassName='cus-popover' content={<CompactPicker color={color} onChangeComplete={onChangeComplete} />} title={null}>
+          <span onMouseDown={e => e.preventDefault()} className={classnames(props.status, props.className)} style={{ color }}>{BackgroundColorToolBar.icon || 'A'}</span>
         </Popover>
       </div>;
     }
-    return <span className={classnames(props.status, props.className)}>{BackgroundColorToolBar.icon || 'A'}</span>
+    return <span className={classnames(props.status, props.className)} style={{ color }}>{BackgroundColorToolBar.icon || 'A'}</span>
   }
 
   componentTerminate() {

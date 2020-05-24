@@ -1,4 +1,3 @@
-import React from 'react';
 import { SlateFunction, TSlateFunction, SlateContainer } from '@slatable/slate';
 import { Subscription } from '@reactivex/rxjs';
   
@@ -7,8 +6,8 @@ export class LineHeightFunction extends SlateFunction implements TSlateFunction 
   private readonly event$: Subscription;
   constructor(container: SlateContainer) {
     super(container, 'attr');
-    this.event$ = this.container.on<{ align: string }>('editor:' + LineHeightFunction.namespace).subscribe(({ align }) => {
-      this.setAttribute([[LineHeightFunction.namespace, align]]);
+    this.event$ = this.container.on<{ lineHeight: string }>('editor:' + LineHeightFunction.namespace).subscribe(({ lineHeight }) => {
+      this.setAttribute([[LineHeightFunction.namespace, lineHeight]]);
     });
   }
 

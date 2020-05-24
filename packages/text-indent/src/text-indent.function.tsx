@@ -1,13 +1,13 @@
 import { SlateFunction, TSlateFunction, SlateContainer } from '@slatable/slate';
 import { Subscription } from '@reactivex/rxjs';
   
-export class AlignFunction extends SlateFunction implements TSlateFunction {
-  static readonly namespace = 'Align';
+export class TextIndentFunction extends SlateFunction implements TSlateFunction {
+  static readonly namespace = 'TextIndent';
   private readonly event$: Subscription;
   constructor(container: SlateContainer) {
     super(container, 'attr');
-    this.event$ = this.container.on<{ align: string }>('editor:' + AlignFunction.namespace).subscribe(({ align }) => {
-      this.setAttribute([[AlignFunction.namespace, align]]);
+    this.event$ = this.container.on<{ textIndent: number }>('editor:' + TextIndentFunction.namespace).subscribe(({ textIndent }) => {
+      this.setAttribute([[TextIndentFunction.namespace, textIndent]]);
     });
   }
 
@@ -20,16 +20,16 @@ export class AlignFunction extends SlateFunction implements TSlateFunction {
   }
 
   // public useRangeMardHook<T extends TLeafNode>(value: T): boolean {
-  //   return !!value[AlignFunction.namespace];
+  //   return !!value[TextIndentFunction.namespace];
   // }
 
   // public componentDeserialize() {
-  //   return { [AlignFunction.namespace]: true };
+  //   return { [TextIndentFunction.namespace]: true };
   // }
 
   public componentRenderStyle<T = any>(data?: any): {
     [key: string]: string | number | boolean,
   } {
-    return { textAlign: data }
+    return { textIndent: data + 'em' }
   }
 }

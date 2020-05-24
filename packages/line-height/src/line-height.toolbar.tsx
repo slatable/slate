@@ -2,42 +2,53 @@ import React from 'react';
 import { TSlateTool, SlateTool, TToolProps, SlateContainer } from '@slatable/slate';
 import { LineHeightFunction } from './line-height.function';
 import classnames from 'classnames';
-import { Dropdown, Menu } from 'antd';
-import { ClickParam } from 'antd/lib/menu';
+import { Editor } from 'slate';
 
-const alignData: {
-  [key: string]: string
-} = {
-  'left': '左对齐',
-  'center': '中对齐',
-  'right': '右对齐'
+const namspaces = [
+  'P'
+];
+
+export interface TLineHeightToolBarComponentProps {
+  items: string[],
+  click: (value: string) => void,
+  selectedValue: string,
+  status: 'actived' | 'normal' | 'disabled',
 }
-
+export type TLineHeightToolBarComponent = React.FunctionComponent<TLineHeightToolBarComponentProps>;
 
 export class LineHeightToolBar extends SlateTool implements TSlateTool {
   static namespace = 'LineHeightToolbar';
   static icon: JSX.Element;
+  static component: TLineHeightToolBarComponent;
   constructor(container: SlateContainer) {
     super(container);
     this.register(LineHeightFunction);
   }
 
-  render(props: TToolProps) {
-    const onClick = (e: ClickParam) => {
+  render(props: TToolProps<TLineHeightToolBarComponentProps['items']>) {
+    let value = '1.75'
+    const [match] = Editor.nodes(this.container.editor, {
+      match: (node: any) => namspaces.indexOf(node.type) > -1
+    });
+    if(match) {
+      const styles: any = match[0].style || []
+      styles.forEach((style: string[]) => {
+        if(style[0] === LineHeightFunction.namespace) {
+          value = style[1];
+        }
+      })
+    }
+
+    const click = (value: string) => {
       if (props.status !== 'disabled') {
-        this.container.cast('editor:' + LineHeightFunction.namespace, { align: e.key });
+        this.container.cast('editor:' + LineHeightFunction.namespace, { lineHeight: value });
       }
     };
+    const Component = LineHeightToolBar.component
 
-    const items = Object.keys(alignData).map(i => (<Menu.Item key={i}>{alignData[i]}</Menu.Item>));
-    const menu = <Menu onClick={onClick}>{items}</Menu>;
-
-    if (props.status !== 'disabled') { 
-      return <div onMouseDown={e => e.preventDefault()}>
-        <Dropdown overlay={menu}><span onMouseDown={e => e.preventDefault()} className={classnames(props.status, props.className)}>N</span></Dropdown>
-      </div>
-    }
-    return <span className={classnames(props.status, props.className)}>{LineHeightToolBar.icon || 'N'}</span>;
+    return !Component ? null : <div onMouseDown={e => e.preventDefault()} className={classnames('line-height', props.status)}>
+      <Component items={props.data} click={click} selectedValue={value} status={props.status} />
+    </div>
   }
 
   componentTerminate() {
