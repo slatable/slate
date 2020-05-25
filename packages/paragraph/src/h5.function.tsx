@@ -2,20 +2,19 @@ import React from 'react';
 import { Subscription } from '@reactivex/rxjs';
 import { SlateFunction, TSlateFunction, SlateContainer, TElementRenderProps } from '@slatable/slate';
 
-export class H4Function extends SlateFunction implements TSlateFunction {
-  static readonly namespace = 'H4';
-  public readonly tagname = 'H4'
+export class H5Function extends SlateFunction implements TSlateFunction {
+  static readonly namespace = 'H5';
+  public readonly tagname = 'H5'
   private readonly event$: Subscription;
   constructor(container: SlateContainer) {
     super(container, 'element');
-    this.event$ = this.container.on('editor:' + H4Function.namespace).subscribe(() => {
-      this.container.focus();
-      this.setElement(H4Function.namespace);
+    this.event$ = this.container.on('editor:' + H5Function.namespace).subscribe(() => {
+      this.setElement(H5Function.namespace);
     });
   }
 
   public componentRenderNodes(props: TElementRenderProps, style: { [key: string]: any }, data: any) {
-    return <h4 id={props.element.id} style={style} {...props.attributes}>{props.children}</h4>
+    return <h5 id={props.element.id} style={style} {...props.attributes}>{props.children}</h5>
   }
 
   // public componentRenderStyle<T = any>(data?: T): {

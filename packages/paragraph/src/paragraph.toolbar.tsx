@@ -1,13 +1,13 @@
 import React, { useCallback } from 'react';
 import { Editor } from 'slate';
-import { SlateContainer, TSlateTool, SlateTool, TToolProps, TElementNode } from '@slatable/slate';
+import { SlateContainer, TSlateTool, SlateTool, TToolProps } from '@slatable/slate';
 import { ParagraphFunction } from './paragraph.function';
-import { H1Function } from './h1';
-import { H2Function } from './h2';
-import { H3Function } from './h3';
-import { H4Function } from './h4';
-import { H5Function } from './h5';
-import { H6Function } from './h6';
+import { H1Function } from './h1.function';
+import { H2Function } from './h2.function';
+import { H3Function } from './h3.function';
+import { H4Function } from './h4.function';
+import { H5Function } from './h5.function';
+import { H6Function } from './h6.function';
 import classnames from 'classnames'
 
 const namspaces = [
@@ -50,7 +50,7 @@ export class ParagraphToolbar extends SlateTool implements TSlateTool {
         this.container.focus();
         this.container.cast('editor:' + namspaces[which]);
       }
-    }, []);
+    }, [props.status]);
     const [match] = Editor.nodes(this.container.editor, {
       match: (node: any) => namspaces.indexOf(node.type) > -1
     });

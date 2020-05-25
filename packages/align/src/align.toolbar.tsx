@@ -1,11 +1,18 @@
 import React from 'react';
 import { TSlateTool, SlateTool, TToolProps, SlateContainer } from '@slatable/slate';
+import { ParagraphFunction, H1Function, H2Function, H3Function, H4Function, H5Function, H6Function } from '@slatable/paragraph';
 import { AlignFunction } from './align.function';
 import classnames from 'classnames';
 import { Editor } from 'slate';
 
 const namspaces = [
-  'P'
+  ParagraphFunction.namespace, 
+  H1Function.namespace, 
+  H2Function.namespace, 
+  H3Function.namespace, 
+  H4Function.namespace, 
+  H5Function.namespace, 
+  H6Function.namespace
 ];
 
 export type TAlignValue = 'left' | 'right' | 'center';

@@ -9,7 +9,6 @@ export class ParagraphFunction extends SlateFunction implements TSlateFunction {
   constructor(container: SlateContainer) {
     super(container, 'element');
     this.event$ = this.container.on('editor:' + ParagraphFunction.namespace).subscribe(() => {
-      this.container.focus();
       this.setElement(ParagraphFunction.namespace);
     });
   }

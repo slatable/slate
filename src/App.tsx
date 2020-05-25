@@ -23,6 +23,8 @@ import { useDecreaseIndent } from './plugins/decrease-indent';
 import { useIncreaseIndent } from './plugins/increase-indent';
 import { useFontFamily } from './plugins/font-family';
 import { useFontSize } from './plugins/font-size';
+import { useNumberedList } from './plugins/numbered-list';
+import { useBulletedList } from './plugins/bulleted-list';
 
 const container = new SlateContainer();
 const ToolBar = CreateNewToolbar(container, <Divider type="vertical" />);
@@ -51,6 +53,10 @@ const formater: TToolbarFormatProps = [
     [useIncreaseIndent(container)],
     [useFontFamily(container), ['SimSun', 'SimHei', 'Microsoft YaHei', 'Microsoft JhengHei', 'NSimSun', 'PMingLiU', 'MingLiU', 'DFKai-SB', 'FangSong', 'KaiTi', 'FangSong_GB2312', 'KaiTi_GB2312']],
     [useFontSize(container), ['12px', '14px', '16px', '20em']]
+  ],
+  [
+    [useNumberedList(container)],
+    [useBulletedList(container)]
   ]
 ];
 
