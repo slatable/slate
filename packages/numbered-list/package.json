@@ -1,6 +1,6 @@
 {
   "name": "@slatable/numbered-list",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "slatable numbered-list",
   "author": "",
   "homepage": "https://github.com/slatable/core",
@@ -21,8 +21,8 @@
     "access": "public"
   },
   "dependencies": {
-    "@slatable/list-item": "^1.0.1",
-    "@slatable/slate": "^1.0.1",
+    "@slatable/list-item": "^1.0.2",
+    "@slatable/slate": "^1.0.2",
     "react": "^16.13.1",
     "slate": "^0.58.1",
     "slate-react": "^0.58.1"

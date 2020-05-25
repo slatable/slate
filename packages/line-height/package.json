@@ -1,6 +1,6 @@
 {
   "name": "@slatable/line-height",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "slatable line-height",
   "author": "",
   "homepage": "https://github.com/slatable/core",
@@ -21,8 +21,8 @@
     "access": "public"
   },
   "dependencies": {
-    "@slatable/paragraph": "^1.0.1",
-    "@slatable/slate": "^1.0.1",
+    "@slatable/paragraph": "^1.0.2",
+    "@slatable/slate": "^1.0.2",
     "classnames": "^2.2.6",
     "react": "^16.13.1",
     "slate": "^0.58.1",
