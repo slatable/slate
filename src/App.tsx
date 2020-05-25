@@ -21,14 +21,17 @@ import { useAlign } from './plugins/align';
 import { useLineHeight } from './plugins/line-height';
 import { useDecreaseIndent } from './plugins/decrease-indent';
 import { useIncreaseIndent } from './plugins/increase-indent';
+import { useFontFamily } from './plugins/font-family';
+import { useFontSize } from './plugins/font-size';
 
 const container = new SlateContainer();
 const ToolBar = CreateNewToolbar(container, <Divider type="vertical" />);
 const [state, titleFunc] = TitleFunction.useTitle(container, initContent, '朱自清 - 荷塘月色')
 const Provider = CreateNewProvider(container, state);
-container.on('content').subscribe(value => console.log('Editor Value:', value));
-titleFunc.allow();
 
+container.on('content').subscribe(value => console.log('Editor Value:', value));
+
+titleFunc.allow();
 const formater: TToolbarFormatProps = [
   [
     [useQuote(container)],
@@ -44,7 +47,9 @@ const formater: TToolbarFormatProps = [
     [useAlign(container), ['left', 'center', 'right']],
     [useLineHeight(container), ['1', '1.25', '1.5', '1.75', '2']],
     [useDecreaseIndent(container)],
-    [useIncreaseIndent(container)]
+    [useIncreaseIndent(container)],
+    [useFontFamily(container), ['SimSun', 'SimHei', 'Microsoft YaHei', 'Microsoft JhengHei', 'NSimSun', 'PMingLiU', 'MingLiU', 'DFKai-SB', 'FangSong', 'KaiTi', 'FangSong_GB2312', 'KaiTi_GB2312']],
+    [useFontSize(container), ['12px', '14px', '16px', '20em']]
   ]
 ];
 

@@ -1,0 +1,34 @@
+{
+  "name": "@slatable/redo",
+  "version": "1.0.0",
+  "description": "slatable redo",
+  "author": "",
+  "homepage": "https://github.com/slatable/core",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "module": "dist/index.es.js",
+  "directories": {
+    "lib": "src",
+    "test": "__tests__"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "rollup -c"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@slatable/slate": "^1.0.0",
+    "slate-react": "^0.58.1",
+    "slate": "^0.58.1",
+    "react": "^16.13.1"
+  },
+  "peerDependencies": {
+    "@reactivex/rxjs": "^6.5.5",
+    "rxjs": "^6.5.5",
+    "rxjs-compat": "^6.5.5"
+  }
+}
