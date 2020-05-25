@@ -4,13 +4,9 @@ import { SlateContainer } from './container';
 import { TElementRenderProps, TElementNode } from './transforms/elementRender';
 import { TLeafRenderProps } from './transforms/leafElement';
 import { Transforms } from 'slate';
-import { ParagraphFunction } from '@slatable/paragraph';
-import { ListItemFunction } from '@slatable/list-item';
-import { NumberedListFunction } from '@slatable/numbered-list';
-import { BulletedListFunction } from '@slatable/bulleted-list';
 
 
-const LIST_TYPES = [NumberedListFunction.namespace, BulletedListFunction.namespace]
+const LIST_TYPES = ['NumberedList', 'BulletedList']
 
 export class SlateFunction {
   public readonly container: SlateContainer;
@@ -45,7 +41,7 @@ export class SlateFunction {
       split: true,
     })
     Transforms.setNodes(editor, {
-      type: isListActive ? ParagraphFunction.namespace : isList ? ListItemFunction.namespace : namespace,
+      type: isListActive ? 'P' : isList ? 'ListItem' : namespace,
       id: props.id,
       style: props.style,
     });
@@ -105,7 +101,7 @@ export class SlateFunction {
       });
 
       Transforms.setNodes(editor, {
-        type: isListActive ? ListItemFunction.namespace : props.type,
+        type: isListActive ? 'ListItem' : props.type,
         id: props.id,
         style: pools,
       });

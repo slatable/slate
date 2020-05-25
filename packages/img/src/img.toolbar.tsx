@@ -21,14 +21,32 @@ export class ImgToolBar extends SlateTool implements TSlateTool {
     this.register(ImgFunction);
   }
 
-  async uploadImage(file: any, callback: Function) {
-    const result = await toBase64(file);
-    callback(result);
+  private postImg(file: any, data: any) {
+    const formData = new FormData();
+    formData.append('file', file);
+    return fetch(data.action, {
+      body: formData,
+      mode: 'no-cors',
+      method: data.method || 'post',
+      credentials: 'include'
+    })
+  }
+
+  async uploadImage(file: any, data: any, callback: Function) {
+    if(data?.action) {
+      const result = await this.postImg(file, data);
+      console.log(result, 'result')
+      callback(result);
+    } else {
+      const result = await toBase64(file);
+      callback(result);
+    }
+    
   }
 
   render(props: TToolProps) {
     const upload = (file: RcFile) => {
-      this.uploadImage(file, (url: string) => {
+      this.uploadImage(file, props.data, (url: string) => {
         if(url) {
           this.container.cast('editor:' + ImgFunction.namespace, { img: url });
         }
