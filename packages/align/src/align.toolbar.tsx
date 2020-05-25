@@ -43,7 +43,7 @@ export class AlignToolBar extends SlateTool implements TSlateTool {
 
     const click = (value: string) => {
       if (props.status !== 'disabled') {
-        this.container.cast('editor:' + AlignFunction.namespace, { lineHeight: value });
+        this.container.cast('editor:' + AlignFunction.namespace, { align: value });
       }
     };
     const Component = AlignToolBar.component
