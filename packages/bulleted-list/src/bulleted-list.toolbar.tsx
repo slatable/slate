@@ -26,4 +26,9 @@ export class BulletedListToolBar extends SlateTool implements TSlateTool {
   componentTerminate() {
     this.unRegister(BulletedListFunction);
   }
+
+
+  componentCanActive(namespace: string) {
+    return BulletedListFunction.namespace === namespace
+  }
 }

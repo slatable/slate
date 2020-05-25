@@ -45,12 +45,18 @@ export class ParagraphToolbar extends SlateTool implements TSlateTool {
   render(props: TToolProps<TParagraphToolbarComponentProps['items']>): JSX.Element {
     let index = 0;
     const Component = ParagraphToolbar.component;
-    const click = useCallback((which: number) => {
+    // const click = useCallback((which: number) => {
+    //   if (props.status !== 'disabled') {
+    //     this.container.cast('editor:' + namspaces[which]);
+    //   }
+    // }, []);
+
+    const click = (which: number) => {
       if (props.status !== 'disabled') {
-        this.container.focus();
         this.container.cast('editor:' + namspaces[which]);
       }
-    }, [props.status]);
+    }
+
     const [match] = Editor.nodes(this.container.editor, {
       match: (node: any) => namspaces.indexOf(node.type) > -1
     });

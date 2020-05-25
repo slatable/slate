@@ -25,6 +25,8 @@ import { useFontFamily } from './plugins/font-family';
 import { useFontSize } from './plugins/font-size';
 import { useNumberedList } from './plugins/numbered-list';
 import { useBulletedList } from './plugins/bulleted-list';
+import { useRedo } from './plugins/redo';
+import { useUndo } from './plugins/undo';
 
 const container = new SlateContainer();
 const ToolBar = CreateNewToolbar(container, <Divider type="vertical" />);
@@ -57,6 +59,10 @@ const formater: TToolbarFormatProps = [
   [
     [useNumberedList(container)],
     [useBulletedList(container)]
+  ],
+  [
+    [useUndo(container)],
+    [useRedo(container)]
   ]
 ];
 

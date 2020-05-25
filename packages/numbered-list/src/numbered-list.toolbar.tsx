@@ -26,4 +26,8 @@ export class NumberedListToolBar extends SlateTool implements TSlateTool {
   componentTerminate() {
     this.unRegister(NumberedListFunction);
   }
+
+  componentCanActive(namespace: string) {
+    return NumberedListFunction.namespace === namespace
+  }
 }

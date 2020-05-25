@@ -11,13 +11,12 @@ export class RedoToolBar extends SlateTool implements TSlateTool {
   }
 
   render(props: TToolProps) {
+    let status = (this.container.editor.history as any).redos.length > 0 ? 'normal' : 'disabled';
     const onClick = useCallback((e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
       e.preventDefault();
-      if (props.status !== 'disabled') {
-        this.container.cast('editor:' + RedoFunction.namespace);
-      }
-    }, [props.status]);
-    return <span onMouseDown={onClick} className={classnames(props.status, props.className)}>{RedoToolBar.icon || 'B'}</span>;
+      this.container.cast('editor:' + RedoFunction.namespace);
+    }, []);
+    return <span onMouseDown={onClick} className={classnames(status, props.className)}>{RedoToolBar.icon || 'R'}</span>;
   }
 
   componentTerminate() {
