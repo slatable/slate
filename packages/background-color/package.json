@@ -1,6 +1,6 @@
 {
   "name": "@slatable/background-color",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "slatable background-color",
   "author": "",
   "homepage": "https://github.com/slatable/core",
@@ -21,11 +21,11 @@
     "access": "public"
   },
   "dependencies": {
-    "@slatable/slate": "^1.0.0",
+    "@slatable/slate": "^1.0.1",
+    "react": "^16.13.1",
     "react-color": "^2.18.1",
-    "slate-react": "^0.58.1",
     "slate": "^0.58.1",
-    "react": "^16.13.1"
+    "slate-react": "^0.58.1"
   },
   "peerDependencies": {
     "@reactivex/rxjs": "^6.5.5",

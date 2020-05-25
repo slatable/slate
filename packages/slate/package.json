@@ -1,6 +1,6 @@
 {
   "name": "@slatable/slate",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "slatable slate",
   "author": "",
   "homepage": "https://github.com/slatable/core",
@@ -28,12 +28,12 @@
     "slate-hyperscript": "^0.58.1"
   },
   "peerDependencies": {
+    "@reactivex/rxjs": "^6.5.5",
     "@types/react": "^16.9.35",
     "react": "^16.13.1",
-    "slate": "^0.58.1",
-    "slate-react": "^0.58.1",
-    "@reactivex/rxjs": "^6.5.5",
     "rxjs": "^6.5.5",
-    "rxjs-compat": "^6.5.5"
+    "rxjs-compat": "^6.5.5",
+    "slate": "^0.58.1",
+    "slate-react": "^0.58.1"
   }
 }
