@@ -29,8 +29,3 @@ export function md5(str: string) {
   hash.update(str);
   return hash.digest('hex');
 }
-
-export function jsonmd5(data: any) {
-  const text = globalformat(data);
-  return md5(text);
-}

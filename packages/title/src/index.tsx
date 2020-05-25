@@ -49,6 +49,14 @@ export class TitleFunction extends SlateFunction implements TSlateFunction {
   private onDelete(action: () => void, isFragment?: boolean) {
     const [active, data] = this.container.useRangeElement(TitleFunction.namespace);
     if (!active) {
+      const selection = this.container.editor.selection;
+      if (selection && !isFragment) {
+        if (
+          selection.anchor.path[0] === 1 &&
+          selection.anchor.path[1] === 0 &&
+          selection.anchor.offset === 0
+        ) return;
+      }
       if (this.container.editor.children.length > 2) return action();
       const chunk = this.container.editor.children[1] as TElementNode;
       if (chunk.children.length > 1) return action();

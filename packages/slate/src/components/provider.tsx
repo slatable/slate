@@ -1,7 +1,7 @@
 import React, { useMemo, useState, useCallback } from 'react';
 import { Slate } from 'slate-react';
 import { SlateContainer } from '../container';
-import { TElementNode, jsonmd5 } from '../transforms';
+import { TElementNode, globalformat } from '../transforms';
 
 export function CreateNewProvider<T extends any[] = any[]>(
   container: SlateContainer, 
@@ -15,7 +15,7 @@ export function CreateNewProvider<T extends any[] = any[]>(
       container.nextTick(diff(container.contentHash, container, value));
     }, []);
     container.content = content;
-    container.contentHash = jsonmd5(content);
+    container.contentHash = globalformat(content);
     return <Slate editor={editor} value={content} onChange={onChange}>{props.children}</Slate>;
   }
 }
@@ -46,11 +46,11 @@ function diff(hash: string, container: SlateContainer, value: TElementNode[]) {
     container.diffing = true;
     if (container.content.length !== value.length) {
       container.content = value;
-      container.contentHash = jsonmd5(value);
+      container.contentHash = globalformat(value);
       container.diffing = false;
       return container.cast('content', value);
     }
-    const str = jsonmd5(value);
+    const str = globalformat(value);
     if (str !== hash) {
       container.content = value;
       container.contentHash = str;
