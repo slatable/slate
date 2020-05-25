@@ -23,7 +23,9 @@
   "dependencies": {
     "@slatable/slate": "^1.0.0",
     "react-color": "^2.18.1",
-    "slate-react": "^0.58.1"
+    "slate-react": "^0.58.1",
+    "slate": "^0.58.1",
+    "react": "^16.13.1"
   },
   "peerDependencies": {
     "@reactivex/rxjs": "^6.5.5",
