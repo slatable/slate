@@ -30,6 +30,7 @@ const [state, titleFunc] = TitleFunction.useTitle(container, initContent, 'æœ±è‡
 const Provider = CreateNewProvider(container, state);
 
 container.on('content').subscribe(value => console.log('Editor Value:', value));
+container.on<{ error: Error, context: any }>('error').subscribe(({ error, context }) => console.warn(error));
 
 titleFunc.allow();
 const formater: TToolbarFormatProps = [

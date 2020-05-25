@@ -7,17 +7,27 @@ import { generate } from 'randomstring';
 import { EventEmitter } from './events';
 import { TElementNode } from './transforms';
 import { SlateToolbar } from './toolbar';
+import { createNextTick } from './next-tick';
 
 export class SlateContainer extends EventEmitter {
   public editor: ReactEditor;
+  public content: TElementNode[];
+  public diffing: boolean = false;
+  public contentHash: string;
   public readonly functions: Map<string, TSlateFunction> = new Map();
   public readonly toolbar = new SlateToolbar(this);
   private readonly counter: Map<string, number> = new Map();
+  public readonly nextTick: (cb?: Function, ctx?: Object) => Promise<unknown>;
   public readonly dependencies: Map<string, Set<string>> = new Map();
   public blurSelection: Range;
 
   static createNewID(weight: number = 5) {
     return generate(weight);
+  }
+  
+  constructor() {
+    super();
+    this.nextTick = createNextTick((error, context) => this.cast('error', { error, context }));
   }
 
   get functionStacks(): Set<string> {
