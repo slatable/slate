@@ -4,6 +4,13 @@ import { SlateContainer } from './container';
 import { TElementRenderProps, TElementNode } from './transforms/elementRender';
 import { TLeafRenderProps } from './transforms/leafElement';
 import { Transforms } from 'slate';
+import { ParagraphFunction } from '@slatable/paragraph';
+import { ListItemFunction } from '@slatable/list-item';
+import { NumberedListFunction } from '@slatable/numbered-list';
+import { BulletedListFunction } from '@slatable/bulleted-list';
+
+
+const LIST_TYPES = [NumberedListFunction.namespace, BulletedListFunction.namespace]
 
 export class SlateFunction {
   public readonly container: SlateContainer;
@@ -22,7 +29,6 @@ export class SlateFunction {
   }
 
   public setLeaf(namespace: string, data?: any) {
-    console.log(namespace, data, 'set')
     this.container.toggleMark(namespace, data);
     return this;
   }
@@ -32,7 +38,6 @@ export class SlateFunction {
     if (!editor) return this;
     if (!editor.selection || !editor.selection.anchor) return this;
     const props = editor.children[editor.selection.anchor.path[0]] as TElementNode;
-    const LIST_TYPES = ['NumberedList', 'BulletedList']
     const isListActive = LIST_TYPES.indexOf(props.type) > -1
     const isList = LIST_TYPES.indexOf(namespace) > -1
     Transforms.unwrapNodes(editor, {
@@ -40,7 +45,7 @@ export class SlateFunction {
       split: true,
     })
     Transforms.setNodes(editor, {
-      type: isListActive ? 'P' : isList ? 'ListItem' : namespace,
+      type: isListActive ? ParagraphFunction.namespace : isList ? ListItemFunction.namespace : namespace,
       id: props.id,
       style: props.style,
     });
@@ -79,7 +84,6 @@ export class SlateFunction {
       const props = editor.children[i] as TElementNode;
       const pools: [string, any][] = (props.style || []).slice(0);
       const _PN = pools.map(p => p[0]);
-      const LIST_TYPES = ['NumberedList', 'BulletedList'];
       const isListActive = LIST_TYPES.indexOf(props.type) > -1;
       style.forEach(sty => {
         const i = _PN.indexOf(sty[0]);
@@ -101,7 +105,7 @@ export class SlateFunction {
       });
 
       Transforms.setNodes(editor, {
-        type: isListActive ? 'ListItem' : props.type,
+        type: isListActive ? ListItemFunction.namespace : props.type,
         id: props.id,
         style: pools,
       });

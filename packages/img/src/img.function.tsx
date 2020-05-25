@@ -1,11 +1,12 @@
 import React from 'react';
 import { SlateFunction, TSlateFunction, SlateContainer, TElementRenderProps } from '@slatable/slate';
+import { ParagraphFunction } from '@slatable/paragraph';
 import { Transforms } from 'slate';
 import { Subscription } from '@reactivex/rxjs';
 
-  
 export class ImgFunction extends SlateFunction implements TSlateFunction {
   static readonly namespace = 'Img';
+  public readonly tagname = 'IMG'
   private readonly event$: Subscription;
   constructor(container: SlateContainer) {
     super(container, 'element');
@@ -25,15 +26,8 @@ export class ImgFunction extends SlateFunction implements TSlateFunction {
         ],
         style: []
       },
-      // {
-      //   type: PFunction.namespace,
-      //   children: [
-      //     { text: '' }
-      //   ],
-      //   style: []
-      // }
       {
-        type: 'P',
+        type: ParagraphFunction.namespace,
         children: [
           { text: 'cdsvdfsvfdvdfvfd' }
         ],
@@ -44,7 +38,6 @@ export class ImgFunction extends SlateFunction implements TSlateFunction {
   }
 
   public componentRenderNodes(props: TElementRenderProps) {
-    console.log(props, 'componentRenderNodes')
     return <div {...props.attributes}>
     <div contentEditable={false}>
       <img src={props.element.src} alt='' />

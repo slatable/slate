@@ -70,7 +70,7 @@ export class SlateContainer extends EventEmitter {
   }
 
   public setLastSelectionWhenBlur() {
-    if (this.editor || this.editor.selection) {
+    if (this.editor && this.editor.selection) {
       this.blurSelection = this.editor.selection;
     }
   }
