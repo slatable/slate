@@ -79,7 +79,7 @@ export class SlateTool {
           if ((this as any).componentCanActive) {
             const res = (this as any).componentCanActive(namespace);
             if (res) return 'actived';
-            return;
+            continue;
           }
           return 'actived';
         }
@@ -95,7 +95,7 @@ export class SlateTool {
         if ((this as any).componentCanActive) {
           const res = (this as any).componentCanActive(namespace);
           if (res) return 'actived';
-          return;
+          continue;
         }
         return 'actived';
       }
