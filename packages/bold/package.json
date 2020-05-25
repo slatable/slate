@@ -1,6 +1,6 @@
 {
   "name": "@slatable/bold",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "slatable bold",
   "author": "",
   "homepage": "https://github.com/slatable/core",
@@ -21,7 +21,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@slatable/slate": "^1.0.2",
+    "@slatable/slate": "^1.0.3",
     "classnames": "^2.2.6",
     "react": "^16.13.1",
     "slate": "^0.58.1",
