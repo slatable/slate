@@ -49,8 +49,7 @@ const formater: TToolbarFormatProps = [
     [useUnderline(container)],
     [useColor(container)],
     [useBackgroundColor(container)],
-    [useImage(container), { action: 'https://alpha-bees2.aidigger.com/api/v1/upload/images', method: 'post' }],
-    // [useImage(container)],
+    [useImage(container), uploadImage],
     [useAlign(container), ['left', 'center', 'right']],
     [useLineHeight(container), ['1', '1.25', '1.5', '1.75', '2']],
     [useDecreaseIndent(container)],
@@ -85,3 +84,15 @@ function App() {
 }
 
 export default App;
+
+
+async function uploadImage(file: Blob) {
+  const form = new FormData();
+  form.append('file', file);
+  const result = await window.fetch('https://alpha-bees2.aidigger.com/api/v1/upload/images', {
+    method: 'POST',
+    credentials: 'include',
+    body: form
+  }).then(data => data.json());
+  return result.url;
+}

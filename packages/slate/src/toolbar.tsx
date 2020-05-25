@@ -2,6 +2,7 @@ import React, { memo } from 'react';
 import { ReactEditor, useSlate } from 'slate-react';
 import { SlateContainer } from './container';
 import { TSlateFunction } from './function';
+import { TElementNode } from './transforms';
 
 export interface TToolProps<T = any> {
   data?: T, 
@@ -43,7 +44,7 @@ export class SlateTool {
     return false;
   }
 
-  private matchType(type: 'element' | 'leaf') {
+  private matchType(type: 'element' | 'leaf' | 'attr') {
     const pool: TSlateFunction[] = [];
     for (const chunk of this.allowFunctions) {
       if (chunk.type === type) {
@@ -100,7 +101,17 @@ export class SlateTool {
         return 'actived';
       }
     }
-    if (this.isRange()) return 'normal';
+    const attrs = this.matchType('attr');
+    const styles = editor.selection 
+      ? ((editor.children[editor.selection.anchor.path[0]].style || []) as TElementNode['style']).map(style => style[0]) 
+      : [];
+
+    for (let i = 0; i < attrs.length; i++) {
+      const namespace = (attrs[i].constructor as any).namespace;
+      const index = styles.indexOf(namespace);
+      if (index > -1) return 'actived';
+    }
+    if (attrs.length || this.isRange()) return 'normal';
     return 'disabled';
   }
 }

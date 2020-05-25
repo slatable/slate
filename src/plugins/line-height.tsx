@@ -29,7 +29,7 @@ export function useLineHeight(container: SlateContainer) {
     >{items}</Menu>;
     return <Dropdown overlay={menu} disabled={props.status === 'disabled'}>
       <div>
-        <span>行间距</span>
+        <span>{props.selectedValue}</span>
         <CaretDownOutlined style={{
           fontSize: '12px'
         }} />
