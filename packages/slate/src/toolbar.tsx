@@ -73,16 +73,32 @@ export class SlateTool {
     if (elements.length) {
       for (let i = 0; i < elements.length; i++) {
         const element = elements[i];
-        const [active] = this.container.useRangeElement((element.constructor as any).namespace, editor);
-        if (active) return 'actived';
+        const namespace = (element.constructor as any).namespace;
+        const [active] = this.container.useRangeElement(namespace, editor);
+        if (active) {
+          if ((this as any).componentCanActive) {
+            const res = (this as any).componentCanActive(namespace);
+            if (res) return 'actived';
+            return;
+          }
+          return 'actived';
+        }
       }
       return 'normal';
     }
     const leafs = this.matchType('leaf');
     for (let i = 0; i < leafs.length; i++) {
       const leaf = leafs[i];
-      const [active] = this.container.useRangeLeaf((leaf.constructor as any).namespace, editor);
-      if (active) return 'actived';
+      const namespace = (leaf.constructor as any).namespace;
+      const [active] = this.container.useRangeLeaf(namespace, editor);
+      if (active) {
+        if ((this as any).componentCanActive) {
+          const res = (this as any).componentCanActive(namespace);
+          if (res) return 'actived';
+          return;
+        }
+        return 'actived';
+      }
     }
     if (this.isRange()) return 'normal';
     return 'disabled';
@@ -93,6 +109,7 @@ export abstract class TSlateTool extends SlateTool {
   static readonly namespace: string;
   abstract render: React.FunctionComponent<TToolProps>;
   abstract componentTerminate?(): void;
+  abstract componentCanActive?(namespace: string): boolean;
 }
 
 export class SlateToolbar {
