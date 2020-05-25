@@ -3,6 +3,9 @@ import { SlateFunction, TSlateFunction, SlateContainer, TElementRenderProps } fr
 import { ParagraphFunction } from '@slatable/paragraph';
 import { Transforms } from 'slate';
 import { Subscription } from '@reactivex/rxjs';
+import { ReactEditor } from 'slate-react';
+import isUrl from 'is-url';
+import imageExtensions from 'image-extensions';
 
 export class ImgFunction extends SlateFunction implements TSlateFunction {
   static readonly namespace = 'Img';
@@ -52,5 +55,37 @@ export class ImgFunction extends SlateFunction implements TSlateFunction {
   
   public componentDeserialize(el: any): any {
     return { type: ImgFunction.namespace, id: SlateContainer.createNewID(), src: el.getAttribute('src') };
+  }
+
+  private isImageUrl(url: string) {
+    if (!url) return false;
+    if (!isUrl(url)) return false;
+    const ext = new URL(url).pathname.split('.').pop();
+    return imageExtensions.includes(ext);
+  }
+
+  public componentWithWrapper(editor: ReactEditor) {
+    const { insertData, isVoid } = editor;
+    editor.isVoid = element => element.type === ImgFunction.namespace ? true : isVoid(element);
+    editor.insertData = data => {
+      const text = data.getData('text/plain')
+      const { files } = data;
+
+      if (files && files.length > 0) {
+        for (const file of files) {
+          const reader = new FileReader()
+          const [mime] = file.type.split('/');
+          if (mime === 'image') {
+            reader.addEventListener('load', () => this.insertImage(reader.result as string));
+            reader.readAsDataURL(file);
+          }
+        }
+      } else if (this.isImageUrl(text)) {
+        this.insertImage(text);
+      } else {
+        insertData(data);
+      }
+    }
+    return editor;
   }
 }

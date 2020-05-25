@@ -1,7 +1,7 @@
 {
-  "name": "@slatable/img",
-  "version": "1.0.1",
-  "description": "slatable img",
+  "name": "@slatable/table",
+  "version": "1.0.0",
+  "description": "slatable table",
   "author": "",
   "homepage": "https://github.com/slatable/core",
   "license": "MIT",
@@ -16,21 +16,16 @@
   ],
   "scripts": {
     "build": "rollup -c",
-    "imgbuild": "rollup -c"
+    "tablebuild": "rollup -c"
   },
   "publishConfig": {
     "access": "public"
   },
   "dependencies": {
-    "@slatable/paragraph": "^1.0.0",
     "@slatable/slate": "^1.0.0",
-    "@types/is-url": "^1.2.28",
-    "classnames": "^2.2.6",
-    "image-extensions": "^1.1.0",
-    "is-url": "^1.2.4",
-    "react": "^16.13.1",
+    "slate-react": "^0.58.1",
     "slate": "^0.58.1",
-    "slate-react": "^0.58.1"
+    "react": "^16.13.1"
   },
   "peerDependencies": {
     "@reactivex/rxjs": "^6.5.5",

@@ -125,6 +125,24 @@
   border:0;
 }
 
+.editor-content table {
+  width: 100%;
+  table-layout: fixed;
+  font-size: 14px;
+  border-left: 1px solid #ddd;
+  border-top: 1px solid #ddd;
+  color: #999;
+}
+
+.editor-content table td {
+  border-right: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  white-space: pre-wrap;
+  word-break: break-all;
+  vertical-align: middle;
+  padding: 10px;
+}
+
 .disabled {
   cursor: not-allowed;
   color: #ccc;

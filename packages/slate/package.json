@@ -15,17 +15,14 @@
     "dist"
   ],
   "scripts": {
-    "build": "rollup -c"
+    "build": "rollup -c",
+    "slatebuild": "rollup -c"
   },
   "publishConfig": {
     "access": "public"
   },
   "dependencies": {
     "@flowx/events": "^1.0.3",
-    "@slatable/bulleted-list": "^1.0.1",
-    "@slatable/list-item": "^1.0.1",
-    "@slatable/numbered-list": "^1.0.1",
-    "@slatable/paragraph": "^1.0.1",
     "@types/randomstring": "^1.1.6",
     "randomstring": "^1.1.5",
     "slate-history": "^0.58.1",

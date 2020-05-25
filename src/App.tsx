@@ -27,6 +27,7 @@ import { useNumberedList } from './plugins/numbered-list';
 import { useBulletedList } from './plugins/bulleted-list';
 import { useRedo } from './plugins/redo';
 import { useUndo } from './plugins/undo';
+import { useTable } from './plugins/table';
 
 const container = new SlateContainer();
 const ToolBar = CreateNewToolbar(container, <Divider type="vertical" />);
@@ -48,6 +49,7 @@ const formater: TToolbarFormatProps = [
     [useUnderline(container)],
     [useColor(container)],
     [useBackgroundColor(container)],
+    // [useImage(container), { action: 'https://bees2.aidigger.com/api/v1/upload/images', method: 'post' }],
     [useImage(container)],
     [useAlign(container), ['left', 'center', 'right']],
     [useLineHeight(container), ['1', '1.25', '1.5', '1.75', '2']],
@@ -63,6 +65,9 @@ const formater: TToolbarFormatProps = [
   [
     [useUndo(container)],
     [useRedo(container)]
+  ],
+  [
+    [useTable(container)]
   ]
 ];
 

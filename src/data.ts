@@ -10,12 +10,186 @@ export const initContent = [
   },
   {
     "id": "5e53c7e4-323c-4dbf-af59-fe821c6d759a",
+    "type": "Img",
+    "src": "https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2534506313,1688529724&fm=26&gp=0.jpg",
+    "children": [
+      {
+        "text": ""
+      }
+    ]
+  },
+  {
+    "id": "5e53c7e4-323c-4dbf-af59-fe821c6d759a",
     "type": "P",
     "children": [
       {
         "text": "沿着荷塘，是一条曲折的小煤屑路。这是一条幽僻的路；白天也少人走，夜晚更加寂寞。荷塘四面，长着许多树，蓊蓊郁郁的。路的一旁，是些杨柳，和一些不知道名字的树。没有月光的晚上，这路上阴森森的，有些怕人。今晚却很好，虽然月光也还是淡淡的。"
       }
     ]
+  },
+  {
+    "children": [
+        {
+            "children": [
+                {
+                    "rowSpan": 1,
+                    "children": [
+                        {
+                            "text": "车系成交价格表"
+                        }
+                    ],
+                    "type": "TableCell",
+                    "colSpan": 6,
+                    "ctype": "title"
+                }
+            ],
+            "type": "TableRow",
+        },
+        {
+            "children": [
+                {
+                    "rowSpan": 1,
+                    "children": [
+                        {
+                            "text": "车型"
+                        }
+                    ],
+                    "type": "TableCell",
+                    "colSpan": 1,
+                    "ctype": "header"
+                },
+                {
+                    "rowSpan": 1,
+                    "children": [
+                        {
+                            "text": "指导价"
+                        }
+                    ],
+                    "type": "TableCell",
+                    "colSpan": 1,
+                    "ctype": "header"
+                },
+                {
+                    "rowSpan": 1,
+                    "children": [
+                        {
+                            "text": "全国平均成交价"
+                        }
+                    ],
+                    "type": "TableCell",
+                    "colSpan": 1,
+                    "ctype": "header"
+                },
+                {
+                    "rowSpan": 1,
+                    "children": [
+                        {
+                            "text": "杭州市平均成交价"
+                        }
+                    ],
+                    "type": "TableCell",
+                    "colSpan": 1,
+                    "ctype": "header"
+                },
+                {
+                    "rowSpan": 1,
+                    "children": [
+                        {
+                            "text": "优惠金额"
+                        }
+                    ],
+                    "type": "TableCell",
+                    "colSpan": 1,
+                    "ctype": "header"
+                },
+                {
+                    "rowSpan": 1,
+                    "children": [
+                        {
+                            "text": "杭州市折扣比率"
+                        }
+                    ],
+                    "type": "TableCell",
+                    "colSpan": 1,
+                    "ctype": "header"
+                }
+            ],
+            "type": "TableRow",
+        },
+        {
+            "children": [
+                {
+                    "rowSpan": 1,
+                    "children": [
+                        {
+                            "text": "2019款 2.0L XL 舒适版"
+                        }
+                    ],
+                    "type": "TableCell",
+                    "colSpan": 1,
+                    "ctype": "text"
+                },
+                {
+                    "rowSpan": 1,
+                    "children": [
+                        {
+                            "text": "18.68"
+                        }
+                    ],
+                    "type": "TableCell",
+                    "colSpan": 1,
+                    "ctype": "text"
+                },
+                {
+                    "rowSpan": 1,
+                    "children": [
+                        {
+                            "text": "15.98"
+                        }
+                    ],
+                    "type": "TableCell",
+                    "colSpan": 1,
+                    "ctype": "text"
+                },
+                {
+                    "rowSpan": 1,
+                    "children": [
+                        {
+                            "text": "15.90"
+                        }
+                    ],
+                    "type": "TableCell",
+                    "colSpan": 1,
+                    "ctype": "text"
+                },
+                {
+                    "rowSpan": 1,
+                    "children": [
+                        {
+                            "text": "2.78"
+                        }
+                    ],
+                    "type": "TableCell",
+                    "colSpan": 1,
+                    "ctype": "text"
+                },
+                {
+                    "rowSpan": 1,
+                    "children": [
+                        {
+                            "text": "8.51折"
+                        }
+                    ],
+                    "type": "TableCell",
+                    "colSpan": 1,
+                    "ctype": "text"
+                }
+            ],
+            "type": "TableRow",
+        }
+    ],
+    "type": "Table",
+    "id": "ae4cdf32-e881-4fe6-90d8-dff2824c9a78"
   },
   {
     "id": "5e53c7e4-323c-4dbf-af59-fe821c6d759a",
