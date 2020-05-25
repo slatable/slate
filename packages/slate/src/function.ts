@@ -144,10 +144,10 @@ export abstract class TSlateFunction extends SlateFunction {
   abstract componentTerminate?(): void;
 
   // 渲染拦截器
-  abstract useRenderHook?<R = any>(
+  abstract useRenderHook?(
     container: SlateContainer, 
     props: TLeafRenderProps | TElementRenderProps
-  ): R;
+  ): any;
 
   // 是否选取选中
   abstract useRangeMarkedHook?<T = any>(value: T): boolean;
