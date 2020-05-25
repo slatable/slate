@@ -125,7 +125,7 @@
   border:0;
 }
 
-.paragraph.disabled {
+.disabled {
   cursor: not-allowed;
   color: #ccc;
 }

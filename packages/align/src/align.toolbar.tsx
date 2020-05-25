@@ -8,10 +8,12 @@ const namspaces = [
   'P'
 ];
 
+export type TAlignValue = 'left' | 'right' | 'center';
+
 export interface TAlignToolBarComponentProps {
-  items: string[],
-  click: (value: string) => void,
-  selectedValue: string,
+  items: TAlignValue[],
+  click: (value: TAlignValue) => void,
+  selectedValue: TAlignValue,
   status: 'actived' | 'normal' | 'disabled',
 }
 export type TAlignToolBarComponent = React.FunctionComponent<TAlignToolBarComponentProps>;
@@ -26,13 +28,13 @@ export class AlignToolBar extends SlateTool implements TSlateTool {
   }
 
   render(props: TToolProps<TAlignToolBarComponentProps['items']>) {
-    let value = 'left'
+    let value: TAlignValue = 'left';
     const [match] = Editor.nodes(this.container.editor, {
       match: (node: any) => namspaces.indexOf(node.type) > -1
     });
     if(match) {
-      const styles: any = match[0].style || []
-      styles.forEach((style: string[]) => {
+      const styles = (match[0].style || []) as [string, TAlignValue][];
+      styles.forEach((style) => {
         if(style[0] === AlignFunction.namespace) {
           value = style[1];
         }
