@@ -8,7 +8,7 @@ import isUrl from 'is-url';
 import imageExtensions from 'image-extensions';
 
 export class ImgFunction extends SlateFunction implements TSlateFunction {
-  static readonly namespace = 'Img';
+  static readonly namespace = 'Image';
   public readonly tagname = 'IMG'
   private readonly event$: Subscription;
   constructor(container: SlateContainer) {
