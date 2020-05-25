@@ -21,22 +21,9 @@ export class ImgToolBar extends SlateTool implements TSlateTool {
     this.register(ImgFunction);
   }
 
-  private postImg(file: any, data: any) {
-    const formData = new FormData();
-    formData.append('file', file);
-    return fetch(data.action, {
-      body: formData,
-      mode: 'no-cors',
-      method: data.method || 'post',
-      credentials: 'include'
-    })
-  }
-
-  async uploadImage(file: any, data: any, callback: Function) {
-    if(data?.action) {
-      const result = await this.postImg(file, data);
-      console.log(result, 'result')
-      callback(result);
+  async uploadImage<T extends Blob>(file: T, data: (file: T) => Promise<string>, callback: Function) {
+    if(data) {
+      callback(await data(file));
     } else {
       const result = await toBase64(file);
       callback(result);
@@ -45,14 +32,12 @@ export class ImgToolBar extends SlateTool implements TSlateTool {
   }
 
   render(props: TToolProps) {
-    const upload = (file: RcFile) => {
+    const upload = useCallback((file: RcFile) => {
       this.uploadImage(file, props.data, (url: string) => {
-        if(url) {
-          this.container.cast('editor:' + ImgFunction.namespace, { img: url });
-        }
+        if(url) this.container.cast('editor:' + ImgFunction.namespace, { img: url });
       });
-      return false
-    }
+      return false;
+    }, []);
     if (props.status !== 'disabled') {
       return <Upload
         beforeUpload={upload}
