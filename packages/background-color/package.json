@@ -15,7 +15,8 @@
     "dist"
   ],
   "scripts": {
-    "build": "rollup -c"
+    "build": "rollup -c",
+    "bgcolorbuild": "rollup -c"
   },
   "publishConfig": {
     "access": "public"
