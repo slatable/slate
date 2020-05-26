@@ -35,7 +35,10 @@ export class Editor extends React.Component<TEditorProps, TEditorStates> {
     // if (this.state.hasError) return <React.Fragment>{this.props.errorComponent}</React.Fragment>
     const Switcher = SwtichRender(this.props.container);
     const Rendering = (props: any) => <Switcher {...props} />;
-    const onBlur = () => this.props.container.setLastSelectionWhenBlur();
+    const onBlur = (e: React.FocusEvent<HTMLDivElement>) => {
+      this.props.container.setLastSelectionWhenBlur();
+      this.props.onBlur && this.props.onBlur(e);
+    }
     return <Editable renderLeaf={Rendering} renderElement={Rendering} onBlur={onBlur} {...this.props} />
   }
 }
