@@ -1,6 +1,6 @@
 {
   "name": "@slatable/table",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "slatable table",
   "author": "",
   "homepage": "https://github.com/slatable/core",
@@ -22,7 +22,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@slatable/slate": "^1.0.3",
+    "@slatable/slate": "^1.0.4",
     "react": "^16.13.1",
     "slate": "^0.58.1",
     "slate-react": "^0.58.1"
