@@ -227,7 +227,7 @@ export class SlateContainer extends EventEmitter {
     if (el.nodeType === 3) return el.textContent;
     else if (el.nodeType !== 1) return null;
     else if (el.nodeName === 'BR') return '\n';
-
+    const attrs = this.findFunctionsByAttr();
     const { nodeName } = el;
     let parent = el;
 
@@ -245,16 +245,31 @@ export class SlateContainer extends EventEmitter {
     const elementTagNode = this.findFunctionByTag(nodeName);
     if (elementTagNode && elementTagNode.componentDeserialize) {
       switch (elementTagNode.type) {
-        case 'element': return jsx('element', elementTagNode.componentDeserialize(el), children);
+        case 'element': 
+          const res = elementTagNode.componentDeserialize(el);
+          if (res) {
+            const styles: [string, any][] = [];
+            attrs.forEach(attr => {
+              const r = attr.componentDeserialize(el);
+              if (r !== undefined) styles.push([(attr.constructor as any).namespace, r]);
+            });
+            res.style = (res.style || []).concat(styles);
+            return jsx('element', res, children);
+          }
         case 'leaf': return children.find((child) => Text.isText(child))?.map((child:any) => jsx('text', elementTagNode.componentDeserialize(el), child));
       }
     }
     return children;
   }
 
+  private findFunctionsByAttr() {
+    return Array.from(this.functions.values()).filter(func => func.type === 'attr' && !!func.componentDeserialize);
+  }
+
   private findFunctionByTag(tag: string) {
     for (const [key, value] of this.functions) {
-      if (value.tagname === tag) {
+      let tagname = value.tagname === 'DIV' ? 'P' : value.tagname;
+      if (tagname === tag) {
         return value;
       }
     }

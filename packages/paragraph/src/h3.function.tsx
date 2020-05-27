@@ -42,7 +42,10 @@ export class H3Function extends SlateFunction implements TSlateFunction {
   //   return false;
   // }
 
-  // public componentDeserialize<T extends HTMLElement>(el: T): { [key: string]: any } {
-  //   return {};
-  // }
+  public componentDeserialize() {
+    return {
+      type: H3Function.namespace,
+      id: SlateContainer.createNewID(),
+    };
+  }
 }

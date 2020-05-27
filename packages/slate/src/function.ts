@@ -134,7 +134,7 @@ export abstract class TSlateFunction extends SlateFunction {
   abstract componentWithWrapper?(editor: ReactEditor): ReactEditor;
 
   // 反序列化HTML到JSON数据
-  abstract componentDeserialize?<T extends HTMLElement>(el: T): { [key: string]: any }
+  abstract componentDeserialize?<T extends HTMLElement>(el: T): any;
 
   abstract componentDeserialized?(fragment: TElementNode[]): TElementNode[];
 

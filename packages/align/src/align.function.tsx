@@ -23,9 +23,9 @@ export class AlignFunction extends SlateFunction implements TSlateFunction {
   //   return !!value[AlignFunction.namespace];
   // }
 
-  // public componentDeserialize() {
-  //   return { [AlignFunction.namespace]: true };
-  // }
+  public componentDeserialize(el: HTMLElement) {
+    return el.style['textAlign'] as string;
+  }
 
   public componentRenderStyle<T = any>(data?: any): {
     [key: string]: string | number | boolean,
