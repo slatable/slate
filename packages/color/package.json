@@ -1,6 +1,6 @@
 {
   "name": "@slatable/color",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "slatable color",
   "author": "",
   "homepage": "https://github.com/slatable/core",
@@ -22,7 +22,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@slatable/slate": "^1.0.10",
+    "@slatable/slate": "^1.0.11",
     "react": "^16.13.1",
     "slate": "^0.58.1",
     "slate-react": "^0.58.1"
