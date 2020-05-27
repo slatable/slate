@@ -21,6 +21,14 @@ export class ImgFunction extends SlateFunction implements TSlateFunction {
   private insertImage(img: string) {
     return Transforms.insertFragment(this.container.editor, [
       {
+        type: ParagraphFunction.namespace,
+        children: [
+          { text: '' }
+        ],
+        style: [],
+        id: SlateContainer.createNewID(),
+      },
+      {
         type: ImgFunction.namespace,
         src: img,
         id: SlateContainer.createNewID(),
@@ -43,7 +51,7 @@ export class ImgFunction extends SlateFunction implements TSlateFunction {
   public componentRenderNodes(props: TElementRenderProps) {
     return <div {...props.attributes}>
     <div contentEditable={false}>
-      <img src={props.element.src} alt='' />
+      <img src={props.element.src} alt='' style={{ maxWidth: '100%' }} />
     </div>
     {props.children}
   </div>;

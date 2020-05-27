@@ -10,7 +10,7 @@ export const initContent = [
   },
   {
     "id": "5e53c7e4-323c-4dbf-af59-fe821c6d759a",
-    "type": "Img",
+    "type": "Image",
     "src": "https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2534506313,1688529724&fm=26&gp=0.jpg",
     "children": [
       {

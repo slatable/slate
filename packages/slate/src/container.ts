@@ -204,7 +204,7 @@ export class SlateContainer extends EventEmitter {
       if (html) {
         const parsed = new DOMParser().parseFromString(html, 'text/html');
         let fragment = this.deserialize(parsed.body);
-        if(fragment[fragment.length - 1].type === 'Img') {
+        if(fragment[fragment.length - 1].type === 'Image') {
           fragment.push({
             type: 'P',
             children: [
