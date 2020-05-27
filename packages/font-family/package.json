@@ -1,6 +1,6 @@
 {
   "name": "@slatable/font-family",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "slatable font-family",
   "author": "",
   "homepage": "https://github.com/slatable/core",
@@ -21,7 +21,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@slatable/slate": "^1.0.4",
+    "@slatable/slate": "^1.0.5",
     "slate-react": "^0.58.1"
   },
   "peerDependencies": {
