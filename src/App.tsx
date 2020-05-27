@@ -73,21 +73,13 @@ const formater: TToolbarFormatProps = [
 ];
 
 function App() {
-  const click = () => {
-    TitleFunction.setTitle(container, '测试设置标题', (effects) => {
-      console.log('effects', effects);
-    });
-  }
   return (
-    <Provider>
+    <Provider errorComponent={<div>err</div>}>
       <div className="editor-header">
         <ToolBar format={formater} />
       </div>
       <div className="editor-content">
         <Editor spellCheck autoFocus container={container} placeholder="请输入文章内容..." className="article" />
-      </div>
-      <div>
-        <button onClick={click}>插入标题信息</button>
       </div>
     </Provider>
   );

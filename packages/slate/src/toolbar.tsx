@@ -55,6 +55,7 @@ export class SlateTool {
   }
 
   public getStatus(editor: ReactEditor): 'actived' | 'normal' | 'disabled' {
+    if (!this.container.editor.selection) return 'disabled';
     const stacks = this.container.functionStacks;
     if (stacks.size) {
       for (const stack of stacks) {

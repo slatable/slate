@@ -159,7 +159,7 @@ export class SlateContainer extends EventEmitter {
         const object = this.functions.get(namespace);
         if (object.useRangeMarkedHook) {
           const [match] = Editor.nodes(_editor, {
-            match: object.useRangeMarkedHook.bind(object),
+            match: (node: any) => object.useRangeMarkedHook(node),
           });
           if (match && match[0]) marks = match[0];
         }
@@ -206,15 +206,6 @@ export class SlateContainer extends EventEmitter {
         const parsed = new DOMParser().parseFromString(html, 'text/html');
         let fragment = this.deserialize(parsed.body) as TElementNode[];
         fragment = componentDeserialized.reduce((prev, next) => next.componentDeserialized(prev), fragment);
-        // if(fragment[fragment.length - 1].type === 'Image') {
-        //   fragment.push({
-        //     type: 'P',
-        //     children: [
-        //       { text: '' }
-        //     ],
-        //     style: []
-        //   } as TElementNode);
-        // }
         Transforms.insertFragment(editor, fragment);
         return;
       }

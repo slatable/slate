@@ -168,6 +168,7 @@
     "@types/classnames": "^2.2.10",
     "@types/react-color": "^3.0.1",
     "antd": "^4.2.4",
-    "classnames": "^2.2.6"
+    "classnames": "^2.2.6",
+    "react-error-boundary": "^2.2.1"
   }
 }

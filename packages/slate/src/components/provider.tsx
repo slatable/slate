@@ -2,11 +2,12 @@ import React, { useMemo, useState, useCallback } from 'react';
 import { Slate } from 'slate-react';
 import { SlateContainer } from '../container';
 import { TElementNode, globalformat } from '../transforms';
+import { ErrorBoundary } from 'react-error-boundary';
 
 export function CreateNewProvider<T extends any[] = any[]>(
   container: SlateContainer, 
   initContent: T
-): React.FunctionComponent<{ title?: string }> {
+): React.FunctionComponent<{ title?: string, errorComponent?: JSX.Element, }> {
   return props => {
     const [content, setContent] = useState(fixedId(initContent));
     const editor = useMemo(() => container.createEditor(), []);
@@ -17,7 +18,9 @@ export function CreateNewProvider<T extends any[] = any[]>(
     }, []);
     container.content = content;
     container.contentHash = globalformat(content);
-    return <Slate editor={editor} value={content} onChange={onChange}>{props.children}</Slate>;
+    return <ErrorBoundary fallbackRender={() => props.errorComponent || null}>
+      <Slate editor={editor} value={content} onChange={onChange}>{props.children}</Slate>
+    </ErrorBoundary>;
   }
 }
 
