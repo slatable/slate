@@ -1,6 +1,6 @@
 {
   "name": "@slatable/redo",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "slatable redo",
   "author": "",
   "homepage": "https://github.com/slatable/core",
@@ -21,7 +21,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@slatable/slate": "^1.0.5",
+    "@slatable/slate": "^1.0.6",
     "react": "^16.13.1",
     "slate": "^0.58.1",
     "slate-react": "^0.58.1"
