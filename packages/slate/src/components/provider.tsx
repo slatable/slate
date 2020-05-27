@@ -11,6 +11,7 @@ export function CreateNewProvider<T extends any[] = any[]>(
     const [content, setContent] = useState(fixedId(initContent));
     const editor = useMemo(() => container.createEditor(), []);
     const onChange = useCallback(value => {
+      container.setLastSelectionWhenBlur();
       setContent(value);
       container.nextTick(diff(container.contentHash, container, value));
     }, []);

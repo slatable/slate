@@ -199,20 +199,22 @@ export class SlateContainer extends EventEmitter {
 
   private withHtml(editor: ReactEditor) {
     const insertData = editor.insertData;
-    editor.insertData = (data: any) => {
+  const componentDeserialized = Array.from(this.functions.values()).filter(func => !!func.componentDeserialized);
+    editor.insertData = (data: DataTransfer) => {
       const html = data.getData('text/html')
       if (html) {
         const parsed = new DOMParser().parseFromString(html, 'text/html');
-        let fragment = this.deserialize(parsed.body);
-        if(fragment[fragment.length - 1].type === 'Image') {
-          fragment.push({
-            type: 'P',
-            children: [
-              { text: '' }
-            ],
-            style: []
-          })
-        }
+        let fragment = this.deserialize(parsed.body) as TElementNode[];
+        fragment = componentDeserialized.reduce((prev, next) => next.componentDeserialized(prev), fragment);
+        // if(fragment[fragment.length - 1].type === 'Image') {
+        //   fragment.push({
+        //     type: 'P',
+        //     children: [
+        //       { text: '' }
+        //     ],
+        //     style: []
+        //   } as TElementNode);
+        // }
         Transforms.insertFragment(editor, fragment);
         return;
       }
@@ -260,5 +262,14 @@ export class SlateContainer extends EventEmitter {
 
   public focus() {
     Transforms.select(this.editor, this.blurSelection);
+  }
+
+  public insertBlock(data: any) {
+    Transforms.insertNodes(this.editor, data);
+    return this;
+  }
+
+  public insertText(data: string) {
+    Transforms.insertText(this.editor, data)
   }
 }
