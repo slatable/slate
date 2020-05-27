@@ -30,6 +30,7 @@ import { useRedo } from './plugins/redo';
 import { useUndo } from './plugins/undo';
 import { useTable } from './plugins/table';
 
+
 const container = new SlateContainer();
 const ToolBar = CreateNewToolbar(container, <Divider type="vertical" />);
 const [state, titleFunc] = TitleFunction.useTitle(container, initContent, '朱自清 - 荷塘月色')

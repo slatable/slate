@@ -42,7 +42,12 @@ export class H4Function extends SlateFunction implements TSlateFunction {
   //   return false;
   // }
 
-  // public componentDeserialize<T extends HTMLElement>(el: T): { [key: string]: any } {
-  //   return {};
-  // }
+  
+  public componentDeserialize<T extends HTMLElement>(el: T): { [key: string]: any } {
+    return {
+      id: SlateContainer.createNewID(),
+      type: H4Function.namespace,
+      style: [],
+    };
+  }
 }
