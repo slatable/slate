@@ -1,6 +1,6 @@
 {
   "name": "@slatable/code",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "slatable code",
   "author": "",
   "homepage": "https://github.com/slatable/core",
@@ -21,7 +21,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@slatable/slate": "^1.0.7",
+    "@slatable/slate": "^1.0.8",
     "classnames": "^2.2.6",
     "react": "^16.13.1",
     "slate": "^0.58.1",
