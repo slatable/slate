@@ -22,6 +22,9 @@ export class NumberedListFunction extends SlateFunction implements TSlateFunctio
   }
 
   public componentDeserialize<T extends HTMLElement>(el: T): { [key: string]: any } {
-    return { type: [NumberedListFunction.namespace] };
+    return { 
+      type: [NumberedListFunction.namespace], 
+      id: SlateContainer.createNewID(),
+    };
   }
 }

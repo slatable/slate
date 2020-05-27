@@ -23,9 +23,10 @@ export class LineHeightFunction extends SlateFunction implements TSlateFunction 
   //   return !!value[LineHeightFunction.namespace];
   // }
 
-  // public componentDeserialize() {
-  //   return { [LineHeightFunction.namespace]: true };
-  // }
+  public componentDeserialize(el: HTMLElement) {
+    return el.style['lineHeight'] as string;
+  }
+
 
   public componentRenderStyle<T = any>(data?: any): {
     [key: string]: string | number | boolean,

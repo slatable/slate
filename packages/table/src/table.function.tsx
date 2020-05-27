@@ -26,7 +26,7 @@ export class TableFunction extends SlateFunction implements TSlateFunction {
   }
 
   public componentDeserialize<T extends HTMLElement>(el: T): { [key: string]: any } {
-    return { type: [TableFunction.namespace] };
+    return { type: [TableFunction.namespace], id: SlateContainer.createNewID() };
   }
 
   public componentWithWrapper(editor: ReactEditor) {

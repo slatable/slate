@@ -23,6 +23,6 @@ export class TableCellFunction extends SlateFunction implements TSlateFunction {
   }
 
   public componentDeserialize<T extends HTMLElement>(el: T): { [key: string]: any } {
-    return { type: [TableCellFunction.namespace] };
+    return { type: [TableCellFunction.namespace], id: SlateContainer.createNewID() };
   }
 }

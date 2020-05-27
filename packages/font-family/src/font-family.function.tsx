@@ -23,4 +23,10 @@ export class FontFamilyFunction extends SlateFunction implements TSlateFunction 
   public useRangeMardHook<T extends TLeafNode>(value: T): boolean {
     return !!value[FontFamilyFunction.namespace];
   }
+
+  public componentDeserialize(el: HTMLElement) {
+    return {
+      [FontFamilyFunction.namespace]: el.style['fontFamily'],
+    }
+  }
 }

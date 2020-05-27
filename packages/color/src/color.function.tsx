@@ -24,7 +24,7 @@ export class ColorFunction extends SlateFunction implements TSlateFunction {
     return !!value[ColorFunction.namespace];
   }
   
-  // public componentDeserialize() {
-  //   return { [ColorFunction.namespace]: true };
-  // }
+  public componentDeserialize(el: HTMLElement) {
+    return { [ColorFunction.namespace]: el.style['color'] };
+  }
 }

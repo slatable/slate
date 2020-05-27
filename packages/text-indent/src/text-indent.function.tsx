@@ -23,9 +23,10 @@ export class TextIndentFunction extends SlateFunction implements TSlateFunction 
   //   return !!value[TextIndentFunction.namespace];
   // }
 
-  // public componentDeserialize() {
-  //   return { [TextIndentFunction.namespace]: true };
-  // }
+  public componentDeserialize(el: HTMLElement) {
+    return el.style['textIndent'].replace('em', '');
+  }
+
 
   public componentRenderStyle<T = any>(data?: any): {
     [key: string]: string | number | boolean,

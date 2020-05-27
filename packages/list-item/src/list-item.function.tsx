@@ -22,6 +22,9 @@ export class ListItemFunction extends SlateFunction implements TSlateFunction {
   }
 
   public componentDeserialize<T extends HTMLElement>(el: T): { [key: string]: any } {
-    return { type: [ListItemFunction.namespace] };
+    return {
+      type: ListItemFunction.namespace,
+      id: SlateContainer.createNewID(),
+    };
   }
 }

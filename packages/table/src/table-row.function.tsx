@@ -22,6 +22,6 @@ export class TableRowFunction extends SlateFunction implements TSlateFunction {
   }
 
   public componentDeserialize<T extends HTMLElement>(el: T): { [key: string]: any } {
-    return { type: [TableRowFunction.namespace] };
+    return { type: [TableRowFunction.namespace], id: SlateContainer.createNewID() };
   }
 }

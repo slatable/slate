@@ -23,4 +23,10 @@ export class FontSizeFunction extends SlateFunction implements TSlateFunction {
   public useRangeMardHook<T extends TLeafNode>(value: T): boolean {
     return !!value[FontSizeFunction.namespace];
   }
+
+  public componentDeserialize(el: HTMLElement) {
+    return {
+      [FontSizeFunction.namespace]: el.style['fontSize'],
+    }
+  }
 }

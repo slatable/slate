@@ -20,7 +20,7 @@ export class BackgroundColorFunction extends SlateFunction implements TSlateFunc
     this.event$.unsubscribe();
   }
   
-  // public componentDeserialize() {
-  //   return { [BackgroundColorFunction.namespace]: true };
-  // }
+  public componentDeserialize(el: HTMLElement) {
+    return { [BackgroundColorFunction.namespace]: el.style['backgroundColor'] };
+  }
 }

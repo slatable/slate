@@ -1,5 +1,5 @@
 import React from 'react';
-import { SlateFunction, TSlateFunction, SlateContainer, TElementRenderProps } from '@slatable/slate';
+import { SlateFunction, TSlateFunction, SlateContainer, TElementRenderProps, TElementNode } from '@slatable/slate';
 import { ParagraphFunction } from '@slatable/paragraph';
 import { Transforms } from 'slate';
 import { Subscription } from '@reactivex/rxjs';
@@ -62,7 +62,24 @@ export class ImgFunction extends SlateFunction implements TSlateFunction {
   }
   
   public componentDeserialize(el: any): any {
-    return { type: ImgFunction.namespace, id: SlateContainer.createNewID(), src: el.getAttribute('src') };
+    return { 
+      type: ImgFunction.namespace, 
+      id: SlateContainer.createNewID(), 
+      src: el.getAttribute('src') 
+    };
+  }
+
+  public componentDeserialized(fragment: TElementNode[]) {
+    if(fragment[fragment.length - 1].type === ImgFunction.namespace) {
+      fragment.push({
+        type: ParagraphFunction.namespace,
+        children: [
+          { text: '' }
+        ],
+        style: []
+      } as TElementNode);
+    }
+    return fragment;
   }
 
   private isImageUrl(url: string) {
