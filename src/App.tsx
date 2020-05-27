@@ -7,6 +7,7 @@ import { initContent } from './data';
 import { Divider } from 'antd';
 import { SlateContainer, CreateNewProvider, Editor, CreateNewToolbar, TToolbarFormatProps } from '@slatable/slate';
 
+import { BoldFunction } from '@slatable/bold';
 import { useQuote } from './plugins/quote';
 import { useCode } from './plugins/code';
 import { useHr } from './plugins/hr';
@@ -37,7 +38,7 @@ const Provider = CreateNewProvider(container, state);
 container.on('content').subscribe(value => console.log('Editor Value:', value));
 container.on<{ error: Error, context: any }>('error').subscribe(({ error, context }) => console.warn(error));
 
-titleFunc.allow();
+titleFunc.allow(BoldFunction);
 const formater: TToolbarFormatProps = [
   [
     [useQuote(container)],
@@ -71,6 +72,11 @@ const formater: TToolbarFormatProps = [
 ];
 
 function App() {
+  const click = () => {
+    TitleFunction.setTitle(container, '测试设置标题', (effects) => {
+      console.log('effects', effects);
+    });
+  }
   return (
     <Provider>
       <div className="editor-header">
@@ -78,6 +84,9 @@ function App() {
       </div>
       <div className="editor-content">
         <Editor spellCheck autoFocus container={container} placeholder="请输入文章内容..." className="article" />
+      </div>
+      <div>
+        <button onClick={click}>插入标题信息</button>
       </div>
     </Provider>
   );

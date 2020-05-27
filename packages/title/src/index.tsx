@@ -22,6 +22,32 @@ export class TitleFunction extends SlateFunction implements TSlateFunction {
     return [data, func];
   }
 
+  static setTitle(container: SlateContainer, title: string, callback?: (effects: { [key: string]: any[] }) => void) {
+    const children = container.editor.children as TElementNode[];
+    const titleChunk = children[0];
+    const focus = titleChunk.children[titleChunk.children.length - 1] as TLeafNode;
+    const effects: { [key: string]: any[] } = {};
+    titleChunk.children.forEach(children => {
+      for (const namespace in children) {
+        if (namespace === 'text') continue;
+        if (!effects[namespace]) effects[namespace] = [];
+        effects[namespace].push(children[namespace]);
+      }
+    });
+    if (callback) callback(effects);
+    Transforms.select(container.editor, {
+      anchor: {
+        offset: 0,
+        path: [0, 0]
+      },
+      focus: {
+        offset: focus.text.length,
+        path: [0, titleChunk.children.length - 1]
+      }
+    });
+    Transforms.insertText(container.editor, title);
+  }
+
   constructor(container: SlateContainer) {
     super(container, 'element');
     this.event$ = this.container.on('editor:' + TitleFunction.namespace).subscribe(() => {
