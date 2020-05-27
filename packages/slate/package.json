@@ -25,6 +25,7 @@
     "@flowx/events": "^1.0.3",
     "@types/randomstring": "^1.1.6",
     "randomstring": "^1.1.5",
+    "react-error-boundary": "^2.2.1",
     "slate-history": "^0.58.1",
     "slate-hyperscript": "^0.58.1"
   },
