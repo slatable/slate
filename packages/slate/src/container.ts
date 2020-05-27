@@ -240,7 +240,7 @@ export class SlateContainer extends EventEmitter {
     const children = Array.from(parent.childNodes)
         .map(this.deserialize.bind(this))
         .flat();
-
+    
     if (el.nodeName === 'BODY') return jsx('fragment', {}, children);
     const elementTagNode = this.findFunctionByTag(nodeName);
     if (elementTagNode && elementTagNode.componentDeserialize) {
