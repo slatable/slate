@@ -16,8 +16,8 @@ import { useBold } from './plugins/bold';
 import { useItalic } from './plugins/italic';
 import { useUnderline } from './plugins/underline';
 import { useColor } from './plugins/color';
+import { useImage } from './plugins/image';
 import { useBackgroundColor } from './plugins/background-color';
-import { useImageEditor } from './plugins/img-editor';
 import { useAlign } from './plugins/align';
 import { useLineHeight } from './plugins/line-height';
 import { useDecreaseIndent } from './plugins/decrease-indent';
@@ -51,7 +51,7 @@ const formater: TToolbarFormatProps = [
     [useUnderline(container)],
     [useColor(container)],
     [useBackgroundColor(container)],
-    [useImageEditor(container), uploadImage],
+    [useImage(container), uploadImage],
     [useAlign(container), ['left', 'center', 'right']],
     [useLineHeight(container), ['1', '1.25', '1.5', '1.75', '2']],
     [useDecreaseIndent(container)],
