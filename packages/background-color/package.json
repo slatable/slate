@@ -32,5 +32,6 @@
     "@reactivex/rxjs": "^6.5.5",
     "rxjs": "^6.5.5",
     "rxjs-compat": "^6.5.5"
-  }
+  },
+  "gitHead": "66ecb602603e9492d2b3ae478075cbd60ac825de"
 }
