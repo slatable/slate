@@ -1,20 +1,21 @@
+
 import React from 'react';
 import { Subscription } from '@reactivex/rxjs';
-import { SlateFunction, TSlateFunction, SlateContainer, TElementRenderProps } from '@slatable/slate';
+import { SlateFunction, TSlateFunction, SlateContainer, TLeafRenderProps, TElementRenderProps } from '@slatable/slate';
 
-export class ParagraphFunction extends SlateFunction implements TSlateFunction {
-  static readonly namespace = 'P';
-  static readonly tagname = 'P';
+export class BlistFunction extends SlateFunction implements TSlateFunction {
+  static readonly namespace = 'UL';
+  static readonly tagname = 'UL';
   private readonly event$: Subscription;
   constructor(container: SlateContainer) {
     super(container, 'element');
-    this.event$ = this.container.on('editor:' + ParagraphFunction.namespace).subscribe(() => {
-      this.setElement(ParagraphFunction.namespace);
+    this.event$ = this.container.on('editor:' + BlistFunction.namespace).subscribe(() => {
+      this.setElement(BlistFunction.namespace);
     });
   }
 
   public componentRenderNodes(props: TElementRenderProps, style: { [key: string]: any }, data: any) {
-    return <p id={props.element.id} style={style} {...props.attributes}>{props.children}</p>
+    return <ul id={props.element.id} {...props.attributes} style={style} >{props.children}</ul>
   }
 
   // public componentRenderStyle<T = any>(data?: T): {
@@ -45,7 +46,7 @@ export class ParagraphFunction extends SlateFunction implements TSlateFunction {
   public componentDeserialize<T extends HTMLElement>(el: T): { [key: string]: any } {
     return {
       id: SlateContainer.createNewID(),
-      type: ParagraphFunction.namespace,
+      type: BlistFunction.namespace,
       style: [],
     };
   }

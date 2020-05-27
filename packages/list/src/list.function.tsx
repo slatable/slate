@@ -1,20 +1,19 @@
 import React from 'react';
 import { Subscription } from '@reactivex/rxjs';
-import { SlateFunction, TSlateFunction, SlateContainer, TElementRenderProps } from '@slatable/slate';
+import { SlateFunction, TSlateFunction, SlateContainer, TLeafRenderProps, TElementRenderProps } from '@slatable/slate';
 
-export class H5Function extends SlateFunction implements TSlateFunction {
-  static readonly namespace = 'H5';
-  public readonly tagname = 'H5'
+export class ListFunction extends SlateFunction implements TSlateFunction {
+  static readonly namespace = 'LI';
   private readonly event$: Subscription;
   constructor(container: SlateContainer) {
     super(container, 'element');
-    this.event$ = this.container.on('editor:' + H5Function.namespace).subscribe(() => {
-      this.setElement(H5Function.namespace);
+    this.event$ = this.container.on('editor:' + ListFunction.namespace).subscribe(() => {
+      this.setElement(ListFunction.namespace);
     });
   }
 
-  public componentRenderNodes(props: TElementRenderProps, style: { [key: string]: any }, data: any) {
-    return <h5 id={props.element.id} style={style} {...props.attributes}>{props.children}</h5>
+  public componentRenderNodes(props: TLeafRenderProps | TElementRenderProps, style: { [key: string]: any }, data: any) {
+    return <li {...props.attributes} style={style}>{props.children}</li>
   }
 
   // public componentRenderStyle<T = any>(data?: T): {
@@ -42,11 +41,7 @@ export class H5Function extends SlateFunction implements TSlateFunction {
   //   return false;
   // }
 
-  
-  public componentDeserialize() {
-    return {
-      id: SlateContainer.createNewID(),
-      type: H5Function.namespace,
-    };
-  }
+  // public componentDeserialize<T extends HTMLElement>(el: T): { [key: string]: any } {
+  //   return {};
+  // }
 }
