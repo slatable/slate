@@ -148,6 +148,6 @@ export abstract class TSlateFunction extends SlateFunction {
   ): any;
 
   // 是否选取选中
-  abstract useRangeMarkedHook(value: TLeafNode): boolean;
+  abstract useRangeMarkedHook?(value: TLeafNode): boolean;
 }
 
