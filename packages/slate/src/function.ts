@@ -2,7 +2,7 @@ import React from 'react';
 import { ReactEditor } from 'slate-react';
 import { SlateContainer } from './container';
 import { TElementRenderProps, TElementNode } from './transforms/elementRender';
-import { TLeafRenderProps } from './transforms/leafElement';
+import { TLeafRenderProps, TLeafNode } from './transforms/leafElement';
 import { Transforms } from 'slate';
 
 
@@ -148,6 +148,6 @@ export abstract class TSlateFunction extends SlateFunction {
   ): any;
 
   // 是否选取选中
-  abstract useRangeMarkedHook?<T = any>(value: T): boolean;
+  abstract useRangeMarkedHook(value: TLeafNode): boolean;
 }
 

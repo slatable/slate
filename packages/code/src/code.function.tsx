@@ -20,7 +20,7 @@ export class CodeFunction extends SlateFunction implements TSlateFunction {
     this.event$.unsubscribe();
   }
 
-  public useRangeMardHook<T extends TLeafNode>(value: T): boolean {
+  public useRangeMarkedHook<T extends TLeafNode>(value: T): boolean {
     return !!value[CodeFunction.namespace];
   }
 
