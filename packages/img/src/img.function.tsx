@@ -72,7 +72,7 @@ export class ImgFunction extends SlateFunction implements TSlateFunction {
   }
 
   public componentDeserialized(fragment: TElementNode[]) {
-    if(fragment[fragment.length - 1].type === ImgFunction.namespace) {
+    if(fragment[fragment.length - 1]?.type === ImgFunction.namespace) {
       fragment.push({
         type: ParagraphFunction.namespace,
         children: [
