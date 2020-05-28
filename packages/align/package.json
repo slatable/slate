@@ -1,6 +1,6 @@
 {
   "name": "@slatable/align",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "description": "slatable align",
   "author": "",
   "homepage": "https://github.com/slatable/core",
@@ -21,8 +21,8 @@
     "access": "public"
   },
   "dependencies": {
-    "@slatable/paragraph": "^1.0.12",
-    "@slatable/slate": "^1.0.12",
+    "@slatable/paragraph": "^1.0.13",
+    "@slatable/slate": "^1.0.13",
     "classnames": "^2.2.6",
     "react": "^16.13.1",
     "slate": "^0.58.1",

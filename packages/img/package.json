@@ -1,6 +1,6 @@
 {
   "name": "@slatable/img",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "description": "slatable img",
   "author": "",
   "homepage": "https://github.com/slatable/core",
@@ -22,8 +22,8 @@
     "access": "public"
   },
   "dependencies": {
-    "@slatable/paragraph": "^1.0.12",
-    "@slatable/slate": "^1.0.12",
+    "@slatable/paragraph": "^1.0.13",
+    "@slatable/slate": "^1.0.13",
     "@types/is-url": "^1.2.28",
     "classnames": "^2.2.6",
     "image-extensions": "^1.1.0",
