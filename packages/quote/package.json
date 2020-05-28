@@ -1,6 +1,6 @@
 {
   "name": "@slatable/quote",
-  "version": "1.0.14",
+  "version": "1.0.15",
   "description": "slatable quote",
   "author": "",
   "homepage": "https://github.com/slatable/core",
@@ -21,7 +21,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@slatable/slate": "^1.0.14",
+    "@slatable/slate": "^1.0.15",
     "classnames": "^2.2.6",
     "react": "^16.13.1",
     "slate": "^0.58.1",

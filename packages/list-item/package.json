@@ -1,6 +1,6 @@
 {
   "name": "@slatable/list-item",
-  "version": "1.0.14",
+  "version": "1.0.15",
   "description": "slatable list-item",
   "author": "",
   "homepage": "https://github.com/slatable/core",
@@ -21,7 +21,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@slatable/slate": "^1.0.14",
+    "@slatable/slate": "^1.0.15",
     "react": "^16.13.1",
     "slate": "^0.58.1",
     "slate-react": "^0.58.1"
