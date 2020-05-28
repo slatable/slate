@@ -3,7 +3,7 @@ import { SlateFunction, TSlateFunction, SlateContainer, TElementRenderProps, TEl
 import { ParagraphFunction } from '@slatable/paragraph';
 import { Transforms } from 'slate';
 import { Subscription } from '@reactivex/rxjs';
-import { ReactEditor } from 'slate-react';
+import { ReactEditor, useSelected, useFocused } from 'slate-react';
 import isUrl from 'is-url';
 import imageExtensions from 'image-extensions';
 
@@ -49,9 +49,11 @@ export class ImgFunction extends SlateFunction implements TSlateFunction {
   }
 
   public componentRenderNodes(props: TElementRenderProps) {
+    const selected = useSelected()
+    const focused = useFocused()
     return <div {...props.attributes}>
     <div contentEditable={false}>
-      <img src={props.element.src} alt='' style={{ maxWidth: '100%' }} />
+      <img src={props.element.src} alt='' style={{ maxWidth: '100%', boxShadow: `${selected && focused ? '0 0 0 3px #B4D5FF' : 'none'}` }} />
     </div>
     {props.children}
   </div>;
