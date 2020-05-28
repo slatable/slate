@@ -89,7 +89,7 @@ export class SlateContainer extends EventEmitter {
    */
   public createEditor() {
     this.editor = withReact(withHistory(createEditor()))
-    const editor = this.withHtml(this.onContext(this.editor));
+    const editor = this.withBreak(this.withHtml(this.onContext(this.editor)));
     return Array.from(this.functions)
       .filter(func => !!func[1].componentWithWrapper)
       .reduce((prev, current) => current[1].componentWithWrapper(prev), editor);
@@ -199,7 +199,7 @@ export class SlateContainer extends EventEmitter {
 
   private withHtml(editor: ReactEditor) {
     const insertData = editor.insertData;
-  const componentDeserialized = Array.from(this.functions.values()).filter(func => !!func.componentDeserialized);
+    const componentDeserialized = Array.from(this.functions.values()).filter(func => !!func.componentDeserialized);
     editor.insertData = (data: DataTransfer) => {
       const html = data.getData('text/html')
       if (html) {
@@ -210,6 +210,19 @@ export class SlateContainer extends EventEmitter {
         return;
       }
       insertData(data);
+    }
+    return editor;
+  }
+
+  private withBreak(editor: ReactEditor) {
+    const insertBreak = editor.insertBreak;
+    editor.insertBreak = () => {
+      insertBreak();
+      Transforms.setNodes(this.editor, {
+        type: 'P',
+        id: SlateContainer.createNewID(),
+        style: []
+      });
     }
     return editor;
   }
