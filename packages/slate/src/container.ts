@@ -5,7 +5,7 @@ import { jsx } from 'slate-hyperscript';
 import { createEditor, Editor, Range, Transforms, Text } from 'slate';
 import { generate } from 'randomstring';
 import { EventEmitter } from './events';
-import { TElementNode } from './transforms';
+import { TElementNode, TLeafNode } from './transforms';
 import { SlateToolbar } from './toolbar';
 import { createNextTick } from './next-tick';
 
@@ -217,8 +217,14 @@ export class SlateContainer extends EventEmitter {
   private withBreak(editor: ReactEditor) {
     const insertBreak = editor.insertBreak;
     editor.insertBreak = () => {
+      const children = this.editor.children as TElementNode[];
+      const selection = this.editor.selection;
+      const isTheSameLine = selection.anchor.path[0] === selection.focus.path[0];
+      const isTheSameEnd = selection.anchor.path[1] === selection.focus.path[1];
+      const last = children[selection.focus.path[0]].children.slice(-1)[0] as TLeafNode;
+      const isAtEnd = isTheSameLine && isTheSameEnd && last.text && (last.text.length === selection.focus.offset);
       insertBreak();
-      Transforms.setNodes(this.editor, {
+      isAtEnd && Transforms.setNodes(this.editor, {
         type: 'P',
         id: SlateContainer.createNewID(),
         style: []
