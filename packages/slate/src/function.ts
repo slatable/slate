@@ -3,7 +3,7 @@ import { ReactEditor } from 'slate-react';
 import { SlateContainer } from './container';
 import { TElementRenderProps, TElementNode } from './transforms/elementRender';
 import { TLeafRenderProps, TLeafNode } from './transforms/leafElement';
-import { Transforms } from 'slate';
+import { Transforms, Editor } from 'slate';
 
 
 const LIST_TYPES = ['NumberedList', 'BulletedList']
@@ -27,6 +27,11 @@ export class SlateFunction {
   public setLeaf(namespace: string, data?: any) {
     this.container.toggleMark(namespace, data);
     return this;
+  }
+
+  public addLeaf(namespace: string, data?: any) {
+    Editor.addMark(this.container.editor, namespace, data === undefined ? true : data);
+    return this
   }
 
   public setElement(namespace: string) {

@@ -8,7 +8,7 @@ export class ColorFunction extends SlateFunction implements TSlateFunction {
   constructor(container: SlateContainer) {
     super(container, 'leaf');
     this.event$ = this.container.on<{ color: string }>('editor:' + ColorFunction.namespace).subscribe(({ color }) => {
-      this.setLeaf(ColorFunction.namespace, color);
+      this.addLeaf(ColorFunction.namespace, color);
     });
   }
 
