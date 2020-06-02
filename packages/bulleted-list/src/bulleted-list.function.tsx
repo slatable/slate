@@ -23,7 +23,7 @@ export class BulletedListFunction extends SlateFunction implements TSlateFunctio
 
   public componentDeserialize<T extends HTMLElement>(el: T): { [key: string]: any } {
     return { 
-      type: [BulletedListFunction.namespace], 
+      type: BulletedListFunction.namespace, 
       id: SlateContainer.createNewID(),
     };
   }
