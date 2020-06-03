@@ -4,7 +4,7 @@ import { SlateFunction, TSlateFunction, SlateContainer, TElementRenderProps } fr
 
 export class ParagraphFunction extends SlateFunction implements TSlateFunction {
   static readonly namespace = 'P';
-  static readonly tagname = 'P';
+  public readonly tagname = 'P';
   private readonly event$: Subscription;
   constructor(container: SlateContainer) {
     super(container, 'element');

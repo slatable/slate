@@ -112,8 +112,9 @@ export class SlateTool {
       const index = styles.indexOf(namespace);
       if (index > -1) return 'actived';
     }
-    if (attrs.length || this.isRange()) return 'normal';
-    return 'disabled';
+    // if (attrs.length || this.isRange() ) return 'normal';
+    // return 'disabled';
+    return 'normal';
   }
 }
 
