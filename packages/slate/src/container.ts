@@ -224,11 +224,20 @@ export class SlateContainer extends EventEmitter {
       const last = children[selection.focus.path[0]].children.slice(-1)[0] as TLeafNode;
       const isAtEnd = isTheSameLine && isTheSameEnd && last.text && (last.text.length === selection.focus.offset);
       insertBreak();
+      const id = SlateContainer.createNewID();
       isAtEnd && Transforms.setNodes(this.editor, {
         type: 'P',
-        id: SlateContainer.createNewID(),
+        id,
         style: []
       });
+      isAtEnd && this.nextTick(() => {
+        const rect = document.getElementById(id).getBoundingClientRect();
+        const top = document.documentElement.clientTop ? document.documentElement.clientTop : 0;
+        const windowH = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+        if (rect.top - top > windowH) {
+          document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+      })
     }
     return editor;
   }
