@@ -8,7 +8,7 @@ export class FontSizeFunction extends SlateFunction implements TSlateFunction {
   constructor(container: SlateContainer) {
     super(container, 'leaf');
     this.event$ = this.container.on<{ fontSize: string }>('editor:' + FontSizeFunction.namespace).subscribe(({ fontSize }) => {
-      this.setLeaf(FontSizeFunction.namespace, fontSize);
+      this.addLeaf(FontSizeFunction.namespace, fontSize);
     });
   }
 

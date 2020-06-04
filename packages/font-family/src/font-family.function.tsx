@@ -8,7 +8,7 @@ export class FontFamilyFunction extends SlateFunction implements TSlateFunction 
   constructor(container: SlateContainer) {
     super(container, 'leaf');
     this.event$ = this.container.on<{ fontFamily: string }>('editor:' + FontFamilyFunction.namespace).subscribe(({ fontFamily }) => {
-      this.setLeaf(FontFamilyFunction.namespace, fontFamily);
+      this.addLeaf(FontFamilyFunction.namespace, fontFamily);
     });
   }
 

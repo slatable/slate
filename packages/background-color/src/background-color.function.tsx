@@ -8,7 +8,7 @@ export class BackgroundColorFunction extends SlateFunction implements TSlateFunc
   constructor(container: SlateContainer) {
     super(container, 'leaf');
     this.event$ = this.container.on<{ color: string }>('editor:' + BackgroundColorFunction.namespace).subscribe(({ color }) => {
-      this.setLeaf(BackgroundColorFunction.namespace, color);
+      this.addLeaf(BackgroundColorFunction.namespace, color);
     });
   }
 
